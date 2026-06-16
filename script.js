@@ -105,10 +105,11 @@ function fakeOrder() {
   if (isOrdering) return;
 
   if (totalPrice === 0) {
-    result.style.display = "block";
-    result.innerHTML = "まずは食べたいものを選んでね。";
-    return;
-  }
+  result.style.display = "block";
+  result.innerHTML = "まずは食べたいものを選んでね。";
+  scrollToResult();
+  return;
+}
 
   isOrdering = true;
 
@@ -126,6 +127,7 @@ function fakeOrder() {
       <div id="deliveryText">${steps[0]}</div>
     </div>
   `;
+  scrollToResult();
 
   let stepIndex = 0;
 
@@ -181,6 +183,8 @@ function showFinalResult() {
 
   renderHistory();
 }
+
+scrollToResult();
 
 function shareResult() {
   const shareData = {
@@ -284,4 +288,16 @@ function clearHistory() {
   renderHistory();
 
   alert("履歴を全部消しました。");
+}function scrollToResult() {
+  const result = document.getElementById("result");
+
+  if (!result) return;
+
+  setTimeout(() => {
+    result.scrollIntoView({
+      behavior: "smooth",
+      block: "center"
+    });
+  }, 100);
 }
+
