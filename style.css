@@ -191,3 +191,41 @@ button:active {
     transform: translateY(0);
   }
 }
+.delivery-box {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px;
+  border-radius: 22px;
+  background: white;
+  box-shadow: 0 10px 28px rgba(249, 115, 22, 0.18);
+  color: #9a3412;
+}
+
+.delivery-icon {
+  width: 58px;
+  height: 58px;
+  display: grid;
+  place-items: center;
+  border-radius: 20px;
+  background: #ffedd5;
+  font-size: 32px;
+  animation: drive 0.8s ease-in-out infinite alternate;
+}
+
+#deliveryText {
+  flex: 1;
+  font-size: 17px;
+  font-weight: 800;
+  line-height: 1.5;
+}
+
+@keyframes drive {
+  from {
+    transform: translateX(-3px) rotate(-2deg);
+  }
+
+  to {
+    transform: translateX(5px) rotate(2deg);
+  }
+}
