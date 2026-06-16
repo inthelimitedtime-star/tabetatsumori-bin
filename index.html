@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>食べたつもり便</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="app">
+    <h1>食べたつもり便</h1>
+    <p class="sub">今日は何を我慢する？</p>
+
+    <div id="menu"></div>
+
+    <div class="cart">
+      <h2>カート</h2>
+      <p>合計：<span id="totalPrice">0</span>円</p>
+      <p>カロリー：<span id="totalCal">0</span>kcal</p>
+      <button onclick="fakeOrder()">注文したつもり！</button>
+    </div>
+
+    <div id="result"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
