@@ -1,0 +1,57 @@
+body {
+  margin: 0;
+  font-family: sans-serif;
+  background: #fff7ed;
+}
+
+.app {
+  max-width: 420px;
+  margin: auto;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+  color: #f97316;
+}
+
+.sub {
+  text-align: center;
+  color: #555;
+}
+
+.food {
+  background: white;
+  border-radius: 16px;
+  padding: 16px;
+  margin: 12px 0;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.food button,
+.cart button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 12px;
+  background: #f97316;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.cart {
+  background: #fff;
+  border-radius: 16px;
+  padding: 16px;
+  margin-top: 20px;
+}
+
+#result {
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: 16px;
+  background: #dcfce7;
+  display: none;
+  font-weight: bold;
+}
