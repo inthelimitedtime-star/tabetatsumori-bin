@@ -98,10 +98,36 @@ function fakeOrder() {
     return;
   }
 
+  const steps = [
+    "注文を受け付けたつもりです 📱",
+    "お店が調理しているつもりです 🍳",
+    "配達員が向かっているつもりです 🛵",
+    "玄関前に到着しない予定です 🚪",
+    `配達されませんでした！<br><br>
+     あなたは <span>${totalPrice.toLocaleString()}円</span> と
+     <span>${totalCal.toLocaleString()}kcal</span> を守りました 🎉`
+  ];
+
   result.style.display = "block";
   result.innerHTML = `
-    注文しませんでした！<br><br>
-    あなたは <span>${totalPrice.toLocaleString()}円</span> と
-    <span>${totalCal.toLocaleString()}kcal</span> を守りました 🎉
+    <div class="delivery-box">
+      <div class="delivery-icon">🛵</div>
+      <div id="deliveryText">${steps[0]}</div>
+    </div>
   `;
+
+  let stepIndex = 0;
+
+  const interval = setInterval(() => {
+    stepIndex++;
+
+    const deliveryText = document.getElementById("deliveryText");
+
+    if (stepIndex < steps.length - 1) {
+      deliveryText.innerHTML = steps[stepIndex];
+    } else {
+      clearInterval(interval);
+      result.innerHTML = steps[stepIndex];
+    }
+  }, 1200);
 }
