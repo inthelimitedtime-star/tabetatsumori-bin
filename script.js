@@ -46,6 +46,7 @@ const foods = [
 let totalPrice = 0;
 let totalCal = 0;
 let itemCount = 0;
+let lastShareText = "";
 
 const menu = document.getElementById("menu");
 
@@ -102,10 +103,7 @@ function fakeOrder() {
     "注文を受け付けたつもりです 📱",
     "お店が調理しているつもりです 🍳",
     "配達員が向かっているつもりです 🛵",
-    "玄関前に到着しない予定です 🚪",
-    `配達されませんでした！<br><br>
-     あなたは <span>${totalPrice.toLocaleString()}円</span> と
-     <span>${totalCal.toLocaleString()}kcal</span> を守りました 🎉`
+    "玄関前に到着しない予定です 🚪"
   ];
 
   result.style.display = "block";
@@ -123,11 +121,57 @@ function fakeOrder() {
 
     const deliveryText = document.getElementById("deliveryText");
 
-    if (stepIndex < steps.length - 1) {
+    if (stepIndex < steps.length) {
       deliveryText.innerHTML = steps[stepIndex];
     } else {
       clearInterval(interval);
-      result.innerHTML = steps[stepIndex];
+      showFinalResult();
     }
   }, 1200);
+}
+
+function showFinalResult() {
+  const result = document.getElementById("result");
+
+  lastShareText = `食べたつもり便で、${totalPrice.toLocaleString()}円と${totalCal.toLocaleString()}kcalを守りました！`;
+
+  result.innerHTML = `
+    <div class="result-card">
+      <div class="result-badge">配達されませんでした</div>
+      <h2>食欲に勝利しました 🎉</h2>
+
+      <div class="result-stats">
+        <div>
+          <span class="result-number">${totalPrice.toLocaleString()}</span>
+          <span class="result-label">円守った</span>
+        </div>
+        <div>
+          <span class="result-number">${totalCal.toLocaleString()}</span>
+          <span class="result-label">kcal守った</span>
+        </div>
+      </div>
+
+      <p class="result-message">
+        注文しなかったあなた、えらい。<br>
+        財布と胃袋が静かに拍手しています。
+      </p>
+
+      <button class="share-button" onclick="shareResult()">結果をシェアする</button>
+    </div>
+  `;
+}
+
+function shareResult() {
+  const shareData = {
+    title: "食べたつもり便",
+    text: lastShareText,
+    url: location.href
+  };
+
+  if (navigator.share) {
+    navigator.share(shareData);
+  } else {
+    navigator.clipboard.writeText(`${lastShareText}\n${location.href}`);
+    alert("シェア文をコピーしました！");
+  }
 }
