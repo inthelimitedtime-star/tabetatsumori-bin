@@ -46,8 +46,12 @@ const foods = [
 let totalPrice = 0;
 let totalCal = 0;
 let itemCount = 0;
+let selectedFoods = [];
 let lastShareText = "";
+let isOrdering = false;
+let currentOrderSaved = false;
 
+const HISTORY_KEY = "tabetatsumoriHistory";
 const menu = document.getElementById("menu");
 
 foods.forEach((food, index) => {
@@ -72,12 +76,17 @@ foods.forEach((food, index) => {
   menu.appendChild(div);
 });
 
+createHistoryArea();
+renderHistory();
+
 function addFood(index) {
   const food = foods[index];
 
   totalPrice += food.price;
   totalCal += food.cal;
   itemCount += 1;
+  selectedFoods.push(`${food.emoji}${food.name}`);
+  currentOrderSaved = false;
 
   document.getElementById("totalPrice").textContent = totalPrice.toLocaleString();
   document.getElementById("totalCal").textContent = totalCal.toLocaleString();
@@ -93,11 +102,15 @@ function addFood(index) {
 function fakeOrder() {
   const result = document.getElementById("result");
 
+  if (isOrdering) return;
+
   if (totalPrice === 0) {
     result.style.display = "block";
     result.innerHTML = "まずは食べたいものを選んでね。";
     return;
   }
+
+  isOrdering = true;
 
   const steps = [
     "注文を受け付けたつもりです 📱",
@@ -125,6 +138,7 @@ function fakeOrder() {
       deliveryText.innerHTML = steps[stepIndex];
     } else {
       clearInterval(interval);
+      isOrdering = false;
       showFinalResult();
     }
   }, 1200);
@@ -134,6 +148,11 @@ function showFinalResult() {
   const result = document.getElementById("result");
 
   lastShareText = `食べたつもり便で、${totalPrice.toLocaleString()}円と${totalCal.toLocaleString()}kcalを守りました！`;
+
+  if (!currentOrderSaved) {
+    saveHistory();
+    currentOrderSaved = true;
+  }
 
   result.innerHTML = `
     <div class="result-card">
@@ -159,6 +178,8 @@ function showFinalResult() {
       <button class="share-button" onclick="shareResult()">結果をシェアする</button>
     </div>
   `;
+
+  renderHistory();
 }
 
 function shareResult() {
@@ -174,4 +195,93 @@ function shareResult() {
     navigator.clipboard.writeText(`${lastShareText}\n${location.href}`);
     alert("シェア文をコピーしました！");
   }
+}
+
+function createHistoryArea() {
+  const app = document.querySelector(".app");
+
+  const historySection = document.createElement("section");
+  historySection.className = "history-section";
+  historySection.innerHTML = `
+    <div class="history-header">
+      <div>
+        <h2>我慢の履歴</h2>
+        <p>このスマホに保存されます</p>
+      </div>
+      <button class="clear-history-button" onclick="clearHistory()">全消し</button>
+    </div>
+
+    <div id="historyList"></div>
+  `;
+
+  app.appendChild(historySection);
+}
+
+function getHistory() {
+  const history = localStorage.getItem(HISTORY_KEY);
+  return history ? JSON.parse(history) : [];
+}
+
+function saveHistory() {
+  const history = getHistory();
+
+  const newRecord = {
+    id: Date.now(),
+    date: new Date().toLocaleString("ja-JP", {
+      month: "numeric",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit"
+    }),
+    price: totalPrice,
+    cal: totalCal,
+    count: itemCount,
+    foods: selectedFoods
+  };
+
+  history.unshift(newRecord);
+
+  localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
+}
+
+function renderHistory() {
+  const historyList = document.getElementById("historyList");
+  const history = getHistory();
+
+  if (!historyList) return;
+
+  if (history.length === 0) {
+    historyList.innerHTML = `
+      <div class="empty-history">
+        まだ履歴はありません。<br>
+        注文したつもりになると、ここに記録されます。
+      </div>
+    `;
+    return;
+  }
+
+  historyList.innerHTML = history.map(record => `
+    <div class="history-card">
+      <div class="history-date">${record.date}</div>
+      <div class="history-main">
+        <strong>${record.price.toLocaleString()}円</strong>
+        <span>${record.cal.toLocaleString()}kcal</span>
+      </div>
+      <div class="history-foods">
+        ${record.foods.slice(0, 4).join(" / ")}
+        ${record.foods.length > 4 ? " ほか" : ""}
+      </div>
+    </div>
+  `).join("");
+}
+
+function clearHistory() {
+  const ok = confirm("履歴を全部消しますか？");
+
+  if (!ok) return;
+
+  localStorage.removeItem(HISTORY_KEY);
+  renderHistory();
+
+  alert("履歴を全部消しました。");
 }
