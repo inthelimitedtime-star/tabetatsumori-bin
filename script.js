@@ -1,562 +1,922 @@
-'use strict';
-
-const STORAGE_KEY = 'tabetatsumori_mvp_v02';
-
-const MENUS = [
-  const SHOP_DATA = [
+const CATEGORIES = [
   {
-    category: 'ラーメン',
-    icon: '🍜',
+    category: "ファストフード",
+    icon: "🍟",
     stores: [
       {
-        id: 'ramen_kotteri',
-        name: 'こってり横丁',
-        desc: '濃厚系ラーメンの誘惑',
-        products: [
-          { id: 'ramen_kotteri_01', name: '特製こってりラーメン', emoji: '🍜', price: 980, cal: 850 }
+        name: "パクっとキッチン",
+        items: [
+          { name: "ごちそうスマッシュバーガー", price: 980 },
+          { name: "サクサクチキンバスケット", price: 880 },
+          { name: "ほくほくポテトBOX", price: 520 },
+          { name: "てりやきミートサンド", price: 760 },
+          { name: "ナゲットパーティーセット", price: 690 }
+        ]
+      },
+      {
+        name: "スピードミール88",
+        items: [
+          { name: "ダブルミートサンド", price: 920 },
+          { name: "スパイシーチキンロール", price: 820 },
+          { name: "やみつきペッパーポテト", price: 560 },
+          { name: "チーズドッグプレート", price: 780 },
+          { name: "バニラシェイク気分", price: 480 }
+        ]
+      },
+      {
+        name: "モグモグステーション",
+        items: [
+          { name: "特盛ジャンクプレート", price: 1180 },
+          { name: "ガーリックチキンBOX", price: 890 },
+          { name: "チーズポテト山盛り", price: 650 },
+          { name: "ミートパイセット", price: 760 },
+          { name: "甘辛チキンナゲット", price: 680 }
+        ]
+      }
+    ]
+  },
+
+  {
+    category: "ハンバーガー",
+    icon: "🍔",
+    stores: [
+      {
+        name: "バーガースタンド橙",
+        items: [
+          { name: "橙クラシックバーガー", price: 1080 },
+          { name: "炙りチーズバーガー", price: 1180 },
+          { name: "アボカドベーコンバーガー", price: 1280 },
+          { name: "オニオンリングバスケット", price: 620 },
+          { name: "自家製レモンスカッシュ", price: 520 }
+        ]
+      },
+      {
+        name: "ミートラボ横丁",
+        items: [
+          { name: "極厚パティバーガー", price: 1380 },
+          { name: "月見てりたまバーガー", price: 1160 },
+          { name: "黒こしょうチキンバーガー", price: 980 },
+          { name: "ガーリックポテト", price: 580 },
+          { name: "濃厚ミルクシェイク", price: 560 }
+        ]
+      },
+      {
+        name: "バンズ研究所",
+        items: [
+          { name: "ふわバンズチーズバーガー", price: 1080 },
+          { name: "はちみつベーコンバーガー", price: 1260 },
+          { name: "スモーキーBBQバーガー", price: 1320 },
+          { name: "チリチーズポテト", price: 690 },
+          { name: "コーラフロート", price: 540 }
+        ]
+      }
+    ]
+  },
+
+  {
+    category: "ラーメン",
+    icon: "🍜",
+    stores: [
+      {
+        name: "麺処しろうず",
+        items: [
+          { name: "白だし豚骨らぁ麺", price: 980 },
+          { name: "辛赤味噌らぁ麺", price: 1060 },
+          { name: "炙りチャーシュー麺", price: 1280 },
+          { name: "ひとくち餃子", price: 480 },
+          { name: "焼豚めし", price: 520 }
+        ]
+      },
+      {
+        name: "らぁ麺 風雲堂",
+        items: [
+          { name: "濃厚鶏白湯そば", price: 1080 },
+          { name: "魚介しょうゆらぁ麺", price: 960 },
+          { name: "背脂ねぎらぁ麺", price: 1050 },
+          { name: "半熟味玉トッピング", price: 180 },
+          { name: "特製炒飯", price: 620 }
+        ]
+      },
+      {
+        name: "麺屋こがね",
+        items: [
+          { name: "黄金味噌ラーメン", price: 1020 },
+          { name: "焦がし醤油ラーメン", price: 980 },
+          { name: "肉盛りつけ麺", price: 1240 },
+          { name: "にんにく餃子", price: 460 },
+          { name: "ねぎ塩チャーシュー丼", price: 580 }
+        ]
+      }
+    ]
+  },
+
+  {
+    category: "寿司",
+    icon: "🍣",
+    stores: [
+      {
+        name: "すし湊まる",
+        items: [
+          { name: "まぐろ三昧セット", price: 1480 },
+          { name: "炙りサーモン握り", price: 1280 },
+          { name: "海鮮ちらし重", price: 1380 },
+          { name: "えび天巻き", price: 920 },
+          { name: "茶碗蒸し", price: 360 }
+        ]
+      },
+      {
+        name: "鮨うたげ",
+        items: [
+          { name: "特上にぎり盛り", price: 1980 },
+          { name: "とろサーモンづくし", price: 1380 },
+          { name: "ねぎとろ巻き", price: 780 },
+          { name: "いくら小丼", price: 980 },
+          { name: "あおさ味噌汁", price: 260 }
+        ]
+      },
+      {
+        name: "海町すし便",
+        items: [
+          { name: "海町にぎり10貫", price: 1580 },
+          { name: "まぐろ赤身セット", price: 1180 },
+          { name: "穴子一本握り", price: 980 },
+          { name: "サーモン親子ちらし", price: 1480 },
+          { name: "玉子焼き", price: 420 }
+        ]
+      }
+    ]
+  },
+
+  {
+    category: "カレー",
+    icon: "🍛",
+    stores: [
+      {
+        name: "カレー工房スパイス月",
+        items: [
+          { name: "王道ビーフカレー", price: 980 },
+          { name: "サクサクロースカツカレー", price: 1260 },
+          { name: "彩り野菜カレー", price: 1050 },
+          { name: "チーズまみれカレー", price: 1120 },
+          { name: "タンドリーチキンカレー", price: 1180 }
+        ]
+      },
+      {
+        name: "ごろっと煮込みカレー屋",
+        items: [
+          { name: "とろ旨ポークカレー", price: 960 },
+          { name: "海老フライカレー", price: 1280 },
+          { name: "ほうれん草チキンカレー", price: 1080 },
+          { name: "温玉カレー", price: 920 },
+          { name: "旨辛キーマカレー", price: 1060 }
+        ]
+      },
+      {
+        name: "スパイス食堂まる雲",
+        items: [
+          { name: "濃厚バターチキンカレー", price: 1150 },
+          { name: "黒ごまビーフカレー", price: 1180 },
+          { name: "なすとひき肉のカレー", price: 980 },
+          { name: "三種あいがけカレー", price: 1380 },
+          { name: "チーズナン気分", price: 520 }
+        ]
+      }
+    ]
+  },
+
+  {
+    category: "日本風カレー",
+    icon: "🥄",
+    stores: [
+      {
+        name: "和だし咖喱 あかり",
+        items: [
+          { name: "和風牛すじカレー", price: 1080 },
+          { name: "だし香るカツカレー", price: 1260 },
+          { name: "とろ玉カレー丼", price: 960 },
+          { name: "甘辛そぼろカレー", price: 920 },
+          { name: "きのこ和風カレー", price: 980 }
+        ]
+      },
+      {
+        name: "おうち咖喱日和",
+        items: [
+          { name: "昔ながらの家カレー", price: 880 },
+          { name: "しょうが焼きカレー", price: 1120 },
+          { name: "ハンバーグカレー", price: 1180 },
+          { name: "コロッケカレー", price: 920 },
+          { name: "やさしい甘口カレー", price: 850 }
+        ]
+      },
+      {
+        name: "カレー亭こむぎ",
+        items: [
+          { name: "給食風ポークカレー", price: 860 },
+          { name: "和牛すじ煮込みカレー", price: 1280 },
+          { name: "からあげカレー", price: 1080 },
+          { name: "半熟卵のせカレー", price: 980 },
+          { name: "福神漬け大盛り", price: 120 }
+        ]
+      }
+    ]
+  },
+
+  {
+    category: "ピザ",
+    icon: "🍕",
+    stores: [
+      {
+        name: "ピッツァ空と窯",
+        items: [
+          { name: "王道マルゲリータ", price: 1480 },
+          { name: "照り焼きチキンピザ", price: 1680 },
+          { name: "4種チーズの濃厚ピザ", price: 1780 },
+          { name: "海の幸トマトピザ", price: 1880 },
+          { name: "フライドポテト", price: 520 }
+        ]
+      },
+      {
+        name: "まるっとピザ研究所",
+        items: [
+          { name: "ペパロニスマイル", price: 1580 },
+          { name: "コーンマヨベーコン", price: 1480 },
+          { name: "たっぷりソーセージピザ", price: 1720 },
+          { name: "バジル香るピザ", price: 1660 },
+          { name: "ハニーチーズピザ", price: 1740 }
+        ]
+      },
+      {
+        name: "夜ふかしピザ便",
+        items: [
+          { name: "深夜のミートピザ", price: 1690 },
+          { name: "チリトマトピザ", price: 1580 },
+          { name: "もち明太ピザ", price: 1620 },
+          { name: "ポテマヨピザ", price: 1480 },
+          { name: "チキンナゲット", price: 640 }
+        ]
+      }
+    ]
+  },
+
+  {
+    category: "中華料理",
+    icon: "🥟",
+    stores: [
+      {
+        name: "中華食堂 龍々",
+        items: [
+          { name: "肉汁焼き餃子", price: 520 },
+          { name: "黄金炒飯", price: 850 },
+          { name: "ふわとろ天津飯", price: 920 },
+          { name: "本格麻婆豆腐", price: 980 },
+          { name: "油淋鶏", price: 1050 }
+        ]
+      },
+      {
+        name: "上海ダイニング紅福",
+        items: [
+          { name: "海老炒飯", price: 980 },
+          { name: "黒酢酢豚", price: 1120 },
+          { name: "四川風麻婆丼", price: 960 },
+          { name: "小籠包", price: 680 },
+          { name: "鶏から香味ソース", price: 980 }
+        ]
+      },
+      {
+        name: "町中華まんぷく楼",
+        items: [
+          { name: "にんにく餃子定食", price: 920 },
+          { name: "チャーシュー炒飯", price: 980 },
+          { name: "回鍋肉丼", price: 960 },
+          { name: "えびチリ", price: 1180 },
+          { name: "春巻きセット", price: 560 }
+        ]
+      }
+    ]
+  },
+
+  {
+    category: "韓国料理",
+    icon: "🌶️",
+    stores: [
+      {
+        name: "ソウル屋台ハヌル",
+        items: [
+          { name: "ヤンニョムチキン", price: 1180 },
+          { name: "石焼きビビンバ", price: 1080 },
+          { name: "チーズトッポギ", price: 890 },
+          { name: "カルビキンパ", price: 860 },
+          { name: "スンドゥブ", price: 980 }
+        ]
+      },
+      {
+        name: "韓ごはんモグモグ亭",
+        items: [
+          { name: "ハニーバターチキン", price: 1160 },
+          { name: "プルコギ丼", price: 1080 },
+          { name: "韓国風海苔巻き", price: 820 },
+          { name: "チーズボール", price: 620 },
+          { name: "キムチチャーハン", price: 920 }
+        ]
+      },
+      {
+        name: "チキンとキンパの店",
+        items: [
+          { name: "甘辛チキンBOX", price: 1280 },
+          { name: "チーズキンパ", price: 920 },
+          { name: "旨辛ラッポッキ", price: 980 },
+          { name: "ナムルビビンバ", price: 960 },
+          { name: "韓国のりポテト", price: 540 }
+        ]
+      }
+    ]
+  },
+
+  {
+    category: "和食",
+    icon: "🍱",
+    stores: [
+      {
+        name: "ごはん処 いろは",
+        items: [
+          { name: "しょうが焼き定食", price: 1080 },
+          { name: "鯖の塩焼き定食", price: 1120 },
+          { name: "鶏の黒酢あん定食", price: 1180 },
+          { name: "だし巻き玉子", price: 480 },
+          { name: "豚汁", price: 360 }
+        ]
+      },
+      {
+        name: "和み食堂こまち",
+        items: [
+          { name: "チキン南蛮定食", price: 1160 },
+          { name: "から揚げ定食", price: 1050 },
+          { name: "鮭の西京焼き定食", price: 1240 },
+          { name: "肉じゃが小鉢", price: 420 },
+          { name: "五目炊き込みご飯", price: 520 }
+        ]
+      },
+      {
+        name: "定食屋まる福",
+        items: [
+          { name: "とんかつ定食", price: 1180 },
+          { name: "味噌カツ定食", price: 1260 },
+          { name: "ぶり照り焼き定食", price: 1280 },
+          { name: "茶碗蒸し", price: 380 },
+          { name: "ごはん大盛り", price: 120 }
+        ]
+      }
+    ]
+  },
+
+  {
+    category: "弁当",
+    icon: "🍱",
+    stores: [
+      {
+        name: "できたて弁当ひなた",
+        items: [
+          { name: "のりから弁当", price: 780 },
+          { name: "チキン南蛮弁当", price: 920 },
+          { name: "しょうが焼き弁当", price: 880 },
+          { name: "ハンバーグ弁当", price: 960 },
+          { name: "幕の内弁当", price: 1080 }
+        ]
+      },
+      {
+        name: "おべんとうキッチン福まる",
+        items: [
+          { name: "唐揚げたっぷり弁当", price: 920 },
+          { name: "牛焼肉弁当", price: 980 },
+          { name: "さば味噌弁当", price: 860 },
+          { name: "そぼろ二色弁当", price: 780 },
+          { name: "ミックスフライ弁当", price: 960 }
+        ]
+      },
+      {
+        name: "弁当茶屋のんびり",
+        items: [
+          { name: "だし巻き弁当", price: 820 },
+          { name: "照り焼きチキン弁当", price: 890 },
+          { name: "豚キムチ弁当", price: 920 },
+          { name: "鮭のり弁当", price: 860 },
+          { name: "おかず盛り合わせ", price: 760 }
+        ]
+      }
+    ]
+  },
+
+  {
+    category: "焼肉",
+    icon: "🥩",
+    stores: [
+      {
+        name: "焼肉どんどこ亭",
+        items: [
+          { name: "カルビ焼肉弁当", price: 1280 },
+          { name: "ハラミ焼肉弁当", price: 1380 },
+          { name: "ねぎ塩牛タン弁当", price: 1580 },
+          { name: "焼肉ビビンバ", price: 1120 },
+          { name: "キムチ盛り", price: 420 }
+        ]
+      },
+      {
+        name: "炙り肉屋 火ノ丸",
+        items: [
+          { name: "特選ロース弁当", price: 1480 },
+          { name: "スタミナ焼肉丼", price: 1180 },
+          { name: "にんにくカルビ弁当", price: 1360 },
+          { name: "牛ホルモン焼き", price: 980 },
+          { name: "ナムル3種盛り", price: 480 }
+        ]
+      },
+      {
+        name: "肉めし山小屋",
+        items: [
+          { name: "牛カルビ重", price: 1180 },
+          { name: "豚トロ塩だれ丼", price: 980 },
+          { name: "焼肉ミックス弁当", price: 1480 },
+          { name: "チョレギサラダ", price: 580 },
+          { name: "温玉ビビンバ", price: 1080 }
+        ]
+      }
+    ]
+  },
+
+  {
+    category: "焼き鳥",
+    icon: "🍢",
+    stores: [
+      {
+        name: "炭火やきとり鳥あかり",
+        items: [
+          { name: "もも串", price: 220 },
+          { name: "ねぎま串", price: 240 },
+          { name: "つくね串", price: 260 },
+          { name: "かわ串", price: 220 },
+          { name: "焼き鳥丼", price: 920 }
+        ]
+      },
+      {
+        name: "やきとり日和すずめ",
+        items: [
+          { name: "塩おまかせ5本盛り", price: 980 },
+          { name: "たれおまかせ5本盛り", price: 980 },
+          { name: "レバー串", price: 230 },
+          { name: "ぼんじり串", price: 260 },
+          { name: "チキン南蛮", price: 780 }
+        ]
+      },
+      {
+        name: "串焼き満月",
+        items: [
+          { name: "月見つくね串", price: 320 },
+          { name: "砂肝串", price: 220 },
+          { name: "せせり串", price: 280 },
+          { name: "焼き鳥重", price: 980 },
+          { name: "山盛りキャベツ", price: 360 }
+        ]
+      }
+    ]
+  },
+
+  {
+    category: "鶏料理",
+    icon: "🍗",
+    stores: [
+      {
+        name: "鶏うま本舗",
+        items: [
+          { name: "特製から揚げ弁当", price: 920 },
+          { name: "油淋鶏弁当", price: 980 },
+          { name: "チキン南蛮弁当", price: 1050 },
+          { name: "塩こうじから揚げ", price: 780 },
+          { name: "親子丼", price: 860 }
+        ]
+      },
+      {
+        name: "からあげ研究会",
+        items: [
+          { name: "醤油からあげBOX", price: 820 },
+          { name: "旨塩からあげBOX", price: 820 },
+          { name: "甘だれチキン弁当", price: 960 },
+          { name: "スパイシーチキン弁当", price: 980 },
+          { name: "山盛りポテト", price: 560 }
+        ]
+      },
+      {
+        name: "チキン食堂こけこっこ",
+        items: [
+          { name: "グリルチキンプレート", price: 1080 },
+          { name: "照り焼きチキン丼", price: 920 },
+          { name: "鶏天弁当", price: 980 },
+          { name: "手羽からBOX", price: 880 },
+          { name: "鶏そぼろ丼", price: 780 }
+        ]
+      }
+    ]
+  },
+
+  {
+    category: "パスタ",
+    icon: "🍝",
+    stores: [
+      {
+        name: "パスタ食堂アルデンテ",
+        items: [
+          { name: "濃厚カルボナーラ", price: 1180 },
+          { name: "王道ミートソース", price: 1080 },
+          { name: "海老のトマトクリーム", price: 1280 },
+          { name: "きのこバターしょうゆ", price: 1060 },
+          { name: "ガーリックトースト", price: 420 }
+        ]
+      },
+      {
+        name: "洋麺キッチンsora",
+        items: [
+          { name: "明太クリームパスタ", price: 1160 },
+          { name: "ペペロンチーノ", price: 980 },
+          { name: "ナポリタン", price: 1050 },
+          { name: "和風ツナおろしパスタ", price: 1080 },
+          { name: "ミニサラダ", price: 380 }
+        ]
+      },
+      {
+        name: "くるくるパスタ亭",
+        items: [
+          { name: "ベーコントマトパスタ", price: 1080 },
+          { name: "あさりバター醤油パスタ", price: 1180 },
+          { name: "チーズミートパスタ", price: 1200 },
+          { name: "ジェノベーゼ", price: 1150 },
+          { name: "スープセット", price: 420 }
+        ]
+      }
+    ]
+  },
+
+  {
+    category: "カフェ",
+    icon: "☕",
+    stores: [
+      {
+        name: "カフェ日だまり",
+        items: [
+          { name: "カフェラテ", price: 560 },
+          { name: "ハニートースト", price: 780 },
+          { name: "たまごサンド", price: 720 },
+          { name: "キャラメルミルク", price: 620 },
+          { name: "ベイクドチーズケーキ", price: 580 }
+        ]
+      },
+      {
+        name: "珈琲と風の店",
+        items: [
+          { name: "深煎りブレンド", price: 520 },
+          { name: "アイスカフェオレ", price: 560 },
+          { name: "厚切りバタートースト", price: 680 },
+          { name: "ナポリタン", price: 980 },
+          { name: "クラシックプリン", price: 520 }
+        ]
+      },
+      {
+        name: "午後のテーブル",
+        items: [
+          { name: "ミックスサンド", price: 760 },
+          { name: "チキンと野菜のラップ", price: 820 },
+          { name: "抹茶ミルクラテ", price: 620 },
+          { name: "チョコブラウニー", price: 540 },
+          { name: "アイスティー", price: 480 }
+        ]
+      }
+    ]
+  },
+
+  {
+    category: "スイーツ",
+    icon: "🍰",
+    stores: [
+      {
+        name: "甘味ラボしゅがー",
+        items: [
+          { name: "もちもちリングドーナツ", price: 360 },
+          { name: "生クリームシュー", price: 420 },
+          { name: "ふわふわロールケーキ", price: 580 },
+          { name: "濃厚チョコタルト", price: 620 },
+          { name: "ミルクプリン", price: 420 }
+        ]
+      },
+      {
+        name: "おやつの森",
+        items: [
+          { name: "いちごショート", price: 620 },
+          { name: "ダブルチーズケーキ", price: 680 },
+          { name: "カスタードエクレア", price: 460 },
+          { name: "しっとりフィナンシェ", price: 320 },
+          { name: "バニラソフト", price: 480 }
+        ]
+      },
+      {
+        name: "砂糖日和",
+        items: [
+          { name: "ふわとろパンケーキ", price: 980 },
+          { name: "チョコバナナクレープ", price: 720 },
+          { name: "いちごミルクパフェ", price: 860 },
+          { name: "焼きたてワッフル", price: 760 },
+          { name: "なめらか杏仁", price: 420 }
+        ]
+      }
+    ]
+  },
+
+  {
+    category: "デザート",
+    icon: "🍨",
+    stores: [
+      {
+        name: "デザート工房ミルミル",
+        items: [
+          { name: "とろけるプリン", price: 460 },
+          { name: "ごほうびクレープ", price: 760 },
+          { name: "チョコバナナパフェ", price: 880 },
+          { name: "いちごワッフル", price: 820 },
+          { name: "マンゴー杏仁", price: 520 }
+        ]
+      },
+      {
+        name: "しあわせ甘味店",
+        items: [
+          { name: "黒みつきなこパンケーキ", price: 920 },
+          { name: "抹茶あんみつ", price: 780 },
+          { name: "白玉ぜんざい", price: 680 },
+          { name: "いちごミルクかき氷", price: 760 },
+          { name: "キャラメルワッフル", price: 790 }
+        ]
+      },
+      {
+        name: "夜のデザート便",
+        items: [
+          { name: "深夜のチョコパフェ", price: 920 },
+          { name: "ほろ苦コーヒーゼリー", price: 560 },
+          { name: "ミルクレープ", price: 680 },
+          { name: "ベリータルト", price: 720 },
+          { name: "アイス盛り合わせ", price: 640 }
+        ]
+      }
+    ]
+  },
+
+  {
+    category: "コーヒーとお茶",
+    icon: "🍵",
+    stores: [
+      {
+        name: "豆と茶ひとやすみ",
+        items: [
+          { name: "本日のコーヒー", price: 480 },
+          { name: "抹茶ラテ", price: 620 },
+          { name: "ほうじ茶ラテ", price: 620 },
+          { name: "アイスティー", price: 460 },
+          { name: "あんバタースコーン", price: 520 }
+        ]
+      },
+      {
+        name: "茶房ブレンド",
+        items: [
+          { name: "深煎りアイスコーヒー", price: 520 },
+          { name: "ロイヤルミルクティー", price: 580 },
+          { name: "黒糖きなこラテ", price: 640 },
+          { name: "たまごサンド", price: 720 },
+          { name: "自家製ガトーショコラ", price: 560 }
+        ]
+      },
+      {
+        name: "珈琲小屋まめ助",
+        items: [
+          { name: "まめ助ブレンド", price: 500 },
+          { name: "カフェモカ", price: 620 },
+          { name: "ゆず茶", price: 560 },
+          { name: "抹茶フィナンシェ", price: 360 },
+          { name: "ホットサンド", price: 780 }
+        ]
+      }
+    ]
+  },
+
+  {
+    category: "コンビニ",
+    icon: "🏪",
+    stores: [
+      {
+        name: "ローソン",
+        items: [
+          { name: "からあげクン", price: 280 },
+          { name: "おにぎり", price: 180 },
+          { name: "サンドイッチ", price: 360 },
+          { name: "弁当", price: 620 },
+          { name: "スイーツ", price: 320 }
+        ]
+      },
+      {
+        name: "ファミリーマート",
+        items: [
+          { name: "ファミチキ", price: 240 },
+          { name: "おにぎり", price: 180 },
+          { name: "パスタ", price: 560 },
+          { name: "弁当", price: 620 },
+          { name: "スイーツ", price: 330 }
+        ]
+      },
+      {
+        name: "セブン-イレブン",
+        items: [
+          { name: "おにぎり", price: 180 },
+          { name: "弁当", price: 650 },
+          { name: "サンドイッチ", price: 380 },
+          { name: "カップ麺", price: 260 },
+          { name: "スイーツ", price: 340 }
         ]
       }
     ]
   }
 ];
-  { id: 'pizza', name: 'ピザ', emoji: '🍕', price: 1680, cal: 1100, category: 'ファストフード', desc: '一切れのつもりが箱ごといく' },
-  { id: 'sushi', name: '寿司', emoji: '🍣', price: 1480, cal: 650, category: '外食', desc: '今日は贅沢したつもり' },
-  { id: 'karaage', name: '唐揚げ弁当', emoji: '🍱', price: 850, cal: 900, category: '弁当', desc: '揚げ物欲をここで成仏' },
-  { id: 'yakiniku', name: '焼肉', emoji: '🥩', price: 2400, cal: 1300, category: '外食', desc: '財布と胃袋を守る高火力メニュー' },
-  { id: 'sweets', name: 'コンビニスイーツ', emoji: '🍰', price: 420, cal: 330, category: 'スイーツ', desc: 'レジ横の甘い罠' },
-  { id: 'cafe', name: 'カフェラテ', emoji: '☕', price: 480, cal: 220, category: 'ドリンク', desc: 'なんとなく買う一杯を今日は見送り' },
-  { id: 'ubereats', name: 'Uber Eats', emoji: '🛵', price: 2300, cal: 1200, category: 'デリバリー', desc: '配達料まで守る大勝利' },
-  { id: 'snack', name: '夜食セット', emoji: '🌙', price: 780, cal: 690, category: '夜食', desc: '寝る前の胃袋会議を閉会' },
-  { id: 'burger', name: 'バーガーセット', emoji: '🍔', price: 950, cal: 880, category: 'ファストフード', desc: 'ポテトの誘惑ごと回避' }
-];
 
-const PRAISES = [
-  'その一品、今日は未来の財布に預けました。',
-  '食べてないのに達成感だけ届きました。',
-  '誘惑に勝った。これはもう小さな優勝です。',
-  '今日のあなた、食欲へのディフェンスが固い。',
-  '胃袋は静かに、財布はにっこりしています。',
-  '配達されなかったけど、成果はちゃんと届きました。'
-];
+let selectedCategoryIndex = null;
+let selectedStoreIndex = null;
 
-const BADGES = [
-  { id: 'first', icon: '🎉', name: '初注文したつもり', desc: '1回記録する', ok: s => s.history.length >= 1 },
-  { id: 'three', icon: '🔥', name: '3回防衛', desc: '3回記録する', ok: s => s.history.length >= 3 },
-  { id: 'week', icon: '📦', name: '7回配達キャンセル', desc: '7回記録する', ok: s => s.history.length >= 7 },
-  { id: 'money5000', icon: '💰', name: '5,000円防衛', desc: '累計5,000円以上', ok: s => total(s.history).price >= 5000 },
-  { id: 'money10000', icon: '👑', name: '1万円防衛', desc: '累計10,000円以上', ok: s => total(s.history).price >= 10000 },
-  { id: 'streak3', icon: '📅', name: '3日連続', desc: '3日連続で記録', ok: s => streakInfo(s.history).current >= 3 },
-  { id: 'favorite', icon: '⭐', name: 'お気に入り職人', desc: 'お気に入りを1件登録', ok: s => s.favorites.length >= 1 },
-  { id: 'share', icon: '📣', name: '布教係', desc: 'シェアを1回使う', ok: s => s.usage.shareCount >= 1 || s.usage.imageShareCount >= 1 }
-];
+const todaySavedEl = document.getElementById("todaySaved");
+const totalSavedEl = document.getElementById("totalSaved");
 
-const DEFAULT_STATE = {
-  history: [],
-  favorites: [],
-  recent: [],
-  goalMonthly: 10000,
-  notifications: false,
-  usage: {
-    launchCount: 0,
-    orderCount: 0,
-    shareCount: 0,
-    imageShareCount: 0,
-    premiumClickCount: 0,
-    notificationClickCount: 0
+const categorySection = document.getElementById("categorySection");
+const storeSection = document.getElementById("storeSection");
+const itemSection = document.getElementById("itemSection");
+const resultSection = document.getElementById("resultSection");
+
+const categoryList = document.getElementById("categoryList");
+const storeList = document.getElementById("storeList");
+const itemList = document.getElementById("itemList");
+
+const storeTitle = document.getElementById("storeTitle");
+const itemTitle = document.getElementById("itemTitle");
+
+const deliveryStatus = document.getElementById("deliveryStatus");
+const resultTitle = document.getElementById("resultTitle");
+const resultText = document.getElementById("resultText");
+
+document.getElementById("backToCategories").addEventListener("click", () => {
+  showScreen("category");
+});
+
+document.getElementById("backToStores").addEventListener("click", () => {
+  showScreen("store");
+});
+
+document.getElementById("orderAgain").addEventListener("click", () => {
+  showScreen("category");
+});
+
+function getTodayString() {
+  const d = new Date();
+  return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
+}
+
+function loadSavings() {
+  const savedDate = localStorage.getItem("savedDate");
+  const today = getTodayString();
+
+  if (savedDate !== today) {
+    localStorage.setItem("savedDate", today);
+    localStorage.setItem("todaySaved", "0");
   }
-};
 
-let state = loadState();
-let cart = [];
-let activeCategory = 'すべて';
-let latestRecord = null;
+  const todaySaved = Number(localStorage.getItem("todaySaved") || 0);
+  const totalSaved = Number(localStorage.getItem("totalSaved") || 0);
 
-const $ = selector => document.querySelector(selector);
-const $$ = selector => Array.from(document.querySelectorAll(selector));
-
-function loadState() {
-  try {
-    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
-    return saved ? merge(structuredClone(DEFAULT_STATE), saved) : structuredClone(DEFAULT_STATE);
-  } catch {
-    return structuredClone(DEFAULT_STATE);
-  }
+  todaySavedEl.textContent = formatYen(todaySaved);
+  totalSavedEl.textContent = formatYen(totalSaved);
 }
 
-function merge(base, extra) {
-  for (const key of Object.keys(extra || {})) {
-    if (extra[key] && typeof extra[key] === 'object' && !Array.isArray(extra[key])) {
-      base[key] = merge(base[key] || {}, extra[key]);
-    } else {
-      base[key] = extra[key];
-    }
-  }
-  return base;
+function addSavings(amount) {
+  const todaySaved = Number(localStorage.getItem("todaySaved") || 0) + amount;
+  const totalSaved = Number(localStorage.getItem("totalSaved") || 0) + amount;
+
+  localStorage.setItem("todaySaved", String(todaySaved));
+  localStorage.setItem("totalSaved", String(totalSaved));
+
+  loadSavings();
 }
 
-function saveState() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+function formatYen(num) {
+  return `¥${num.toLocaleString()}`;
 }
 
-function yen(value) {
-  return `${Number(value || 0).toLocaleString()}円`;
-}
+function showScreen(screenName) {
+  categorySection.classList.remove("active");
+  storeSection.classList.remove("active");
+  itemSection.classList.remove("active");
+  resultSection.classList.remove("active");
 
-function kcal(value) {
-  return `${Number(value || 0).toLocaleString()}kcal`;
-}
-
-function dateKey(date = new Date()) {
-  const d = new Date(date);
-  const y = d.getFullYear();
-  const m = String(d.getMonth() + 1).padStart(2, '0');
-  const day = String(d.getDate()).padStart(2, '0');
-  return `${y}-${m}-${day}`;
-}
-
-function monthKey(date = new Date()) {
-  return dateKey(date).slice(0, 7);
-}
-
-function total(records) {
-  return records.reduce((sum, record) => {
-    sum.price += Number(record.totalPrice || 0);
-    sum.cal += Number(record.totalCal || 0);
-    return sum;
-  }, { price: 0, cal: 0 });
-}
-
-function escapeHtml(text) {
-  return String(text).replace(/[&<>'"]/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#039;', '"': '&quot;' }[char]));
-}
-
-function init() {
-  state.usage.launchCount += 1;
-  saveState();
-  bindEvents();
-  renderAll();
-  showDailyNotificationIfNeeded();
-}
-
-function bindEvents() {
-  $('#searchInput').addEventListener('input', renderMenus);
-  $('#clearCartButton').addEventListener('click', clearCart);
-  $('#orderButton').addEventListener('click', orderPretend);
-  $('#resetButton').addEventListener('click', resetData);
-  $('#editGoalButton').addEventListener('click', openGoalDialog);
-  $('#saveGoalButton').addEventListener('click', saveGoal);
-  $('#premiumButton').addEventListener('click', openPremium);
-  $('#notifyButton').addEventListener('click', enableNotifications);
-}
-
-function renderAll() {
-  renderCategories();
-  renderMenus();
-  renderRecentAndFavorites();
-  renderCart();
-  renderSummary();
-  renderGoal();
-  renderGraph();
-  renderBadges();
-  renderUsage();
-  renderHistory();
+  if (screenName === "category") categorySection.classList.add("active");
+  if (screenName === "store") storeSection.classList.add("active");
+  if (screenName === "item") itemSection.classList.add("active");
+  if (screenName === "result") resultSection.classList.add("active");
 }
 
 function renderCategories() {
-  const categories = ['すべて', ...new Set(MENUS.map(menu => menu.category))];
-  $('#categoryRow').innerHTML = categories.map(category => `
-    <button class="category-chip ${category === activeCategory ? 'active' : ''}" type="button" data-category="${escapeHtml(category)}">${escapeHtml(category)}</button>
-  `).join('');
+  categoryList.innerHTML = "";
 
-  $$('#categoryRow button').forEach(button => {
-    button.addEventListener('click', () => {
-      activeCategory = button.dataset.category;
-      renderCategories();
-      renderMenus();
-    });
-  });
-}
-
-function renderMenus() {
-  const keyword = $('#searchInput').value.trim().toLowerCase();
-  const filtered = MENUS.filter(menu => {
-    const matchCategory = activeCategory === 'すべて' || menu.category === activeCategory;
-    const text = `${menu.name} ${menu.category} ${menu.desc}`.toLowerCase();
-    return matchCategory && text.includes(keyword);
-  });
-
-  if (!filtered.length) {
-    $('#menuList').innerHTML = emptyState('🍽️', '該当メニューがありません', '検索ワードやカテゴリを変えてみてください。');
-    return;
-  }
-
-  $('#menuList').innerHTML = filtered.map(menu => `
-    <article class="menu-card">
-      <div class="menu-emoji">${menu.emoji}</div>
-      <div>
-        <strong>${escapeHtml(menu.name)}</strong>
-        <small>${escapeHtml(menu.category)} / ${yen(menu.price)} / ${kcal(menu.cal)}<br>${escapeHtml(menu.desc)}</small>
-      </div>
-      <div class="menu-actions">
-        <button class="icon-button" type="button" data-add="${menu.id}" aria-label="追加">＋</button>
-        <button class="icon-button" type="button" data-fav="${menu.id}" aria-label="お気に入り">${state.favorites.includes(menu.id) ? '★' : '☆'}</button>
-      </div>
-    </article>
-  `).join('');
-
-  $$('[data-add]').forEach(button => button.addEventListener('click', () => addToCart(button.dataset.add)));
-  $$('[data-fav]').forEach(button => button.addEventListener('click', () => toggleFavorite(button.dataset.fav)));
-}
-
-function renderRecentAndFavorites() {
-  renderChipList('#recentRow', '#recentBlock', state.recent, '最近使ったメニューはまだありません。');
-  renderChipList('#favoriteRow', '#favoriteBlock', state.favorites, 'お気に入りはまだありません。');
-}
-
-function renderChipList(rowSelector, blockSelector, ids, emptyText) {
-  const block = $(blockSelector);
-  const row = $(rowSelector);
-  if (!ids.length) {
-    block.hidden = false;
-    row.innerHTML = `<span class="hint">${emptyText}</span>`;
-    return;
-  }
-  row.innerHTML = ids.map(id => {
-    const menu = MENUS.find(item => item.id === id);
-    if (!menu) return '';
-    return `<button class="chip" type="button" data-chip-add="${menu.id}">${menu.emoji} ${escapeHtml(menu.name)}</button>`;
-  }).join('');
-  $$('[data-chip-add]').forEach(button => button.addEventListener('click', () => addToCart(button.dataset.chipAdd)));
-}
-
-function addToCart(id) {
-  const menu = MENUS.find(item => item.id === id);
-  if (!menu) return;
-  cart.push({ ...menu, lineId: crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random()}` });
-  rememberRecent(id);
-  renderRecentAndFavorites();
-  renderCart();
-}
-
-function removeFromCart(lineId) {
-  cart = cart.filter(item => item.lineId !== lineId);
-  renderCart();
-}
-
-function clearCart() {
-  cart = [];
-  renderCart();
-}
-
-function renderCart() {
-  $('#cartCount').textContent = `${cart.length}品`;
-  if (!cart.length) {
-    $('#cartItems').className = 'cart-items empty';
-    $('#cartItems').textContent = 'まだ選ばれていません。';
-  } else {
-    $('#cartItems').className = 'cart-items';
-    $('#cartItems').innerHTML = cart.map(item => `
-      <div class="cart-line">
-        <span>${item.emoji} ${escapeHtml(item.name)}</span>
-        <strong>${yen(item.price)}</strong>
-        <button type="button" data-remove="${item.lineId}">×</button>
-      </div>
-    `).join('');
-    $$('[data-remove]').forEach(button => button.addEventListener('click', () => removeFromCart(button.dataset.remove)));
-  }
-
-  const cartTotal = total(cart.map(item => ({ totalPrice: item.price, totalCal: item.cal })));
-  $('#cartMoney').textContent = yen(cartTotal.price);
-  $('#cartCal').textContent = kcal(cartTotal.cal);
-}
-
-function orderPretend() {
-  if (!cart.length) {
-    $('#resultSection').innerHTML = emptyState('🙈', 'まだ何も選んでいません', '食べたつもりにしたいメニューを追加してください。');
-    location.hash = '#resultSection';
-    return;
-  }
-
-  const record = {
-    id: crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}`,
-    date: new Date().toISOString(),
-    dateKey: dateKey(),
-    items: cart.map(item => ({ id: item.id, name: item.name, emoji: item.emoji, price: item.price, cal: item.cal, category: item.category })),
-    totalPrice: cart.reduce((sum, item) => sum + item.price, 0),
-    totalCal: cart.reduce((sum, item) => sum + item.cal, 0),
-    praise: PRAISES[Math.floor(Math.random() * PRAISES.length)]
-  };
-
-  latestRecord = record;
-  state.history.unshift(record);
-  state.usage.orderCount += 1;
-  saveState();
-  clearCart();
-  renderAll();
-  renderResult(record);
-  $('#resultSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
-
-function renderResult(record) {
-  const names = record.items.map(item => item.name).join('、');
-  $('#resultSection').innerHTML = `
-    <div class="result-card order-animation">
-      <div class="result-icon">✅</div>
-      <p class="eyebrow">Order Complete</p>
-      <h2>食べたつもり注文完了！</h2>
-      <div class="result-stats">
-        <div class="result-stat"><span>今回守った金額</span><strong>${yen(record.totalPrice)}</strong></div>
-        <div class="result-stat"><span>今回避けたカロリー</span><strong>${kcal(record.totalCal)}</strong></div>
-      </div>
-      <p class="praise">${escapeHtml(record.praise)}</p>
-      <p class="hint">${escapeHtml(names)} を食べたつもりで記録しました。</p>
-      <div class="share-actions">
-        <button class="secondary" type="button" id="shareX">Xでシェア</button>
-        <button class="secondary" type="button" id="shareLine">LINEで送る</button>
-        <button class="primary" type="button" id="shareImage">画像シェア</button>
-        <button class="ghost" type="button" id="copyShare">文をコピー</button>
-      </div>
-    </div>
-  `;
-  $('#shareX').addEventListener('click', () => shareText('x', record));
-  $('#shareLine').addEventListener('click', () => shareText('line', record));
-  $('#shareImage').addEventListener('click', () => shareImage(record));
-  $('#copyShare').addEventListener('click', () => copyShareText(record));
-}
-
-function shareTemplate(record) {
-  return `今日は${record.items.map(item => item.name).join('、')}を食べたつもりで${yen(record.totalPrice)}守りました。\n${kcal(record.totalCal)}回避！\n#食べたつもり便`;
-}
-
-function shareText(type, record) {
-  const text = shareTemplate(record);
-  state.usage.shareCount += 1;
-  saveState();
-  renderBadges();
-  renderUsage();
-
-  if (type === 'x') {
-    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank', 'noopener');
-  } else {
-    window.open(`https://line.me/R/msg/text/?${encodeURIComponent(text)}`, '_blank', 'noopener');
-  }
-}
-
-async function copyShareText(record) {
-  await navigator.clipboard.writeText(shareTemplate(record));
-  alert('シェア文をコピーしました。');
-}
-
-async function shareImage(record) {
-  const canvas = $('#shareCanvas');
-  const ctx = canvas.getContext('2d');
-  const w = canvas.width;
-  const h = canvas.height;
-
-  ctx.fillStyle = '#fff7ed';
-  ctx.fillRect(0, 0, w, h);
-  ctx.fillStyle = '#fed7aa';
-  ctx.beginPath();
-  ctx.arc(920, 120, 260, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.fillStyle = '#ffedd5';
-  ctx.beginPath();
-  ctx.arc(120, 970, 300, 0, Math.PI * 2);
-  ctx.fill();
-
-  ctx.fillStyle = '#1f2937';
-  ctx.textAlign = 'center';
-  ctx.font = 'bold 58px sans-serif';
-  ctx.fillText('食べたつもり便', w / 2, 130);
-  ctx.font = '120px sans-serif';
-  ctx.fillText('📦', w / 2, 285);
-
-  ctx.font = 'bold 64px sans-serif';
-  ctx.fillText('本日の防衛結果', w / 2, 410);
-  ctx.font = 'bold 52px sans-serif';
-  ctx.fillText(`${yen(record.totalPrice)} 守った`, w / 2, 530);
-  ctx.fillText(`${kcal(record.totalCal)} 回避`, w / 2, 610);
-
-  ctx.font = '34px sans-serif';
-  ctx.fillStyle = '#57534e';
-  wrapText(ctx, record.items.map(item => item.name).join('、'), w / 2, 710, 850, 44);
-  ctx.fillStyle = '#c2410c';
-  ctx.font = 'bold 36px sans-serif';
-  wrapText(ctx, record.praise, w / 2, 850, 840, 46);
-
-  const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
-  const file = new File([blob], 'tabetatsumori-result.png', { type: 'image/png' });
-  state.usage.imageShareCount += 1;
-  saveState();
-  renderBadges();
-  renderUsage();
-
-  if (navigator.canShare && navigator.canShare({ files: [file] })) {
-    await navigator.share({ files: [file], title: '食べたつもり便', text: shareTemplate(record) });
-  } else {
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'tabetatsumori-result.png';
-    a.click();
-    URL.revokeObjectURL(url);
-  }
-}
-
-function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
-  let line = '';
-  const chars = Array.from(text);
-  for (const char of chars) {
-    const test = line + char;
-    if (ctx.measureText(test).width > maxWidth && line) {
-      ctx.fillText(line, x, y);
-      line = char;
-      y += lineHeight;
-    } else {
-      line = test;
-    }
-  }
-  ctx.fillText(line, x, y);
-}
-
-function toggleFavorite(id) {
-  if (state.favorites.includes(id)) {
-    state.favorites = state.favorites.filter(item => item !== id);
-  } else {
-    state.favorites.unshift(id);
-  }
-  saveState();
-  renderAll();
-}
-
-function rememberRecent(id) {
-  state.recent = [id, ...state.recent.filter(item => item !== id)].slice(0, 6);
-  saveState();
-}
-
-function renderSummary() {
-  const today = dateKey();
-  const month = monthKey();
-  const todayTotal = total(state.history.filter(record => record.dateKey === today));
-  const monthTotal = total(state.history.filter(record => record.dateKey.startsWith(month)));
-  const allTotal = total(state.history);
-  const streak = streakInfo(state.history);
-
-  $('#todayMoney').textContent = yen(todayTotal.price);
-  $('#todayCal').textContent = `${kcal(todayTotal.cal)} 回避`;
-  $('#monthMoney').textContent = yen(monthTotal.price);
-  $('#monthCal').textContent = `${kcal(monthTotal.cal)} 回避`;
-  $('#totalMoney').textContent = yen(allTotal.price);
-  $('#totalCal').textContent = `${kcal(allTotal.cal)} 回避`;
-  $('#streakDays').textContent = `${streak.current}日`;
-  $('#bestStreak').textContent = `最高 ${streak.best}日`;
-}
-
-function renderGoal() {
-  const monthTotal = total(state.history.filter(record => record.dateKey.startsWith(monthKey()))).price;
-  const goal = Number(state.goalMonthly || 10000);
-  const rate = Math.min(100, Math.round((monthTotal / goal) * 100));
-  $('#goalText').textContent = `${yen(monthTotal)} / ${yen(goal)}`;
-  $('#goalRate').textContent = `${rate}%`;
-  $('#goalBar').style.width = `${rate}%`;
-  $('#goalHint').textContent = rate >= 100 ? '目標達成！これは普通に強い。' : `あと ${yen(Math.max(0, goal - monthTotal))} で達成です。`;
-}
-
-function openGoalDialog() {
-  $('#goalInput').value = state.goalMonthly;
-  $('#goalDialog').showModal();
-}
-
-function saveGoal() {
-  const value = Number($('#goalInput').value);
-  if (!value || value < 100) {
-    alert('100円以上で入力してください。');
-    return;
-  }
-  state.goalMonthly = value;
-  saveState();
-  $('#goalDialog').close();
-  renderGoal();
-}
-
-function streakInfo(history) {
-  const days = [...new Set(history.map(record => record.dateKey))].sort();
-  if (!days.length) return { current: 0, best: 0 };
-  const daySet = new Set(days);
-
-  function addDays(key, amount) {
-    const d = new Date(`${key}T00:00:00`);
-    d.setDate(d.getDate() + amount);
-    return dateKey(d);
-  }
-
-  let best = 1;
-  let run = 1;
-  for (let i = 1; i < days.length; i++) {
-    if (addDays(days[i - 1], 1) === days[i]) run += 1;
-    else run = 1;
-    best = Math.max(best, run);
-  }
-
-  let start = dateKey();
-  if (!daySet.has(start) && daySet.has(addDays(start, -1))) start = addDays(start, -1);
-  let current = 0;
-  while (daySet.has(addDays(start, -current))) current += 1;
-
-  return { current, best };
-}
-
-function renderGraph() {
-  const today = new Date();
-  const days = Array.from({ length: 7 }, (_, index) => {
-    const d = new Date(today);
-    d.setDate(today.getDate() - (6 - index));
-    const key = dateKey(d);
-    const value = total(state.history.filter(record => record.dateKey === key)).price;
-    return { key, label: `${d.getMonth() + 1}/${d.getDate()}`, value };
-  });
-  const max = Math.max(...days.map(day => day.value), 1);
-  $('#barChart').innerHTML = days.map(day => `
-    <div class="bar-item" title="${day.label} ${yen(day.value)}">
-      <div class="bar" style="height:${Math.max(4, (day.value / max) * 120)}px"></div>
-      <strong>${day.label}</strong>
-      <span>${day.value ? yen(day.value) : '0'}</span>
-    </div>
-  `).join('');
-}
-
-function renderBadges() {
-  $('#badgeGrid').innerHTML = BADGES.map(badge => {
-    const unlocked = badge.ok(state);
-    return `
-      <div class="badge ${unlocked ? '' : 'locked'}">
-        <strong>${badge.icon} ${escapeHtml(badge.name)}</strong>
-        <small>${unlocked ? '獲得済み' : escapeHtml(badge.desc)}</small>
-      </div>
+  CATEGORIES.forEach((category, index) => {
+    const card = document.createElement("button");
+    card.className = "category-card";
+    card.innerHTML = `
+      <span class="category-icon">${category.icon}</span>
+      <span class="category-name">${category.category}</span>
     `;
-  }).join('');
+
+    card.addEventListener("click", () => {
+      selectedCategoryIndex = index;
+      renderStores();
+      showScreen("store");
+    });
+
+    categoryList.appendChild(card);
+  });
 }
 
-function renderUsage() {
-  const usage = [
-    ['起動回数', state.usage.launchCount],
-    ['注文回数', state.usage.orderCount],
-    ['シェア回数', state.usage.shareCount + state.usage.imageShareCount],
-    ['有料導線クリック', state.usage.premiumClickCount]
-  ];
-  $('#usageGrid').innerHTML = usage.map(([label, value]) => `
-    <div class="usage-card"><strong>${Number(value).toLocaleString()}</strong><small>${label}</small></div>
-  `).join('');
+function renderStores() {
+  const category = CATEGORIES[selectedCategoryIndex];
+
+  storeTitle.textContent = `${category.category}のお店を選ぶ`;
+  storeList.innerHTML = "";
+
+  category.stores.forEach((store, index) => {
+    const card = document.createElement("button");
+    card.className = "store-card";
+    card.innerHTML = `
+      <strong>${store.name}</strong>
+      <span>${store.items.length}件の商品</span>
+    `;
+
+    card.addEventListener("click", () => {
+      selectedStoreIndex = index;
+      renderItems();
+      showScreen("item");
+    });
+
+    storeList.appendChild(card);
+  });
 }
 
-function renderHistory() {
-  if (!state.history.length) {
-    $('#historyList').innerHTML = emptyState('📝', '履歴はまだありません', '注文したつもりをすると、ここに記録されます。');
-    return;
-  }
+function renderItems() {
+  const category = CATEGORIES[selectedCategoryIndex];
+  const store = category.stores[selectedStoreIndex];
 
-  $('#historyList').innerHTML = state.history.map(record => `
-    <article class="history-card">
-      <div>
-        <strong>${record.items.map(item => `${item.emoji}${escapeHtml(item.name)}`).join('、')}</strong>
-        <small>${new Date(record.date).toLocaleString('ja-JP', {
+  itemTitle.textContent = `${store.name}の商品を選ぶ`;
+  itemList.innerHTML = "";
+
+  store.items.forEach((item) => {
+    const row = document.createElement("button");
+    row.className = "item-card";
+    row.innerHTML = `
+      <span>${item.name}</span>
+      <strong>${formatYen(item.price)}</strong>
+    `;
+
+    row.addEventListener("click", () => {
+      orderItem(category, store, item);
+    });
+
+    itemList.appendChild(row);
+  });
+}
+
+function orderItem(category, store, item) {
+  addSavings(item.price);
+
+  showScreen("result");
+
+  deliveryStatus.textContent = "注文を受け付けたつもりです";
+
+  setTimeout(() => {
+    deliveryStatus.textContent = "調理しているつもりです";
+  }, 700);
+
+  setTimeout(() => {
+    deliveryStatus.textContent = "配達員が向かっているつもりです";
+  }, 1400);
+
+  setTimeout(() => {
+    deliveryStatus.textContent = "届いたつもりです";
+  }, 2100);
+
+  resultTitle.textContent = `${item.name}を食べたつもり！`;
+
+  resultText.innerHTML = `
+    <span>カテゴリ：${category.category}</span><br>
+    <span>店舗：${store.name}</span><br>
+    <span>節約できた金額：<strong>${formatYen(item.price)}</strong></span>
+  `;
+}
+
+loadSavings();
+renderCategories();
+showScreen("category");
