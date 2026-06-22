@@ -6,8 +6,8 @@
 
   <title>食べたつもり便</title>
 
-  <link rel="stylesheet" href="style.css?v=6" />
-  <script src="script.js?v=6" defer></script>
+  <link rel="stylesheet" href="style.css?v=8" />
+  <script src="script.js?v=8" defer></script>
 </head>
 
 <body>
@@ -55,8 +55,9 @@
       </div>
 
       <div class="search-box">
-        <span>🔍</span>
+        <span class="search-icon">🔍</span>
         <input id="searchInput" type="search" placeholder="ラーメン、カレー、チキンなど" />
+        <button id="clearSearch" class="search-clear hidden" type="button">×</button>
       </div>
 
       <div id="searchResults" class="search-results"></div>
@@ -122,51 +123,129 @@
     <section id="accountScreen" class="screen">
       <div class="section-title">
         <h2>マイアカウント</h2>
-        <p>食べたつもりで節約できた金額</p>
+        <p>食べたつもりの記録と設定</p>
       </div>
 
       <div class="account-card">
         <div class="account-avatar">😋</div>
-        <h3>ゲストさん</h3>
+        <h3 id="accountNameDisplay">ゲストさん</h3>
         <p>今日も食べたつもりでえらい</p>
       </div>
 
-      <div class="saving-list">
-        <div class="saving-row">
-          <span>今日の節約</span>
-          <strong id="accountTodaySaved">¥0</strong>
-        </div>
-        <div class="saving-row">
-          <span>累計</span>
-          <strong id="accountTotalSaved">¥0</strong>
+      <div class="account-section">
+        <h3>お支払い方法</h3>
+
+        <div class="payment-grid">
+          <button class="payment-card" type="button">
+            <span>💴</span>
+            <strong>現金</strong>
+            <small>食べたつもり払い</small>
+          </button>
+
+          <button class="payment-card" type="button">
+            <span>💳</span>
+            <strong>クレジットカード</strong>
+            <small>登録したつもり</small>
+          </button>
+
+          <button class="payment-card" type="button">
+            <span>📱</span>
+            <strong>電子マネー</strong>
+            <small>使ったつもり</small>
+          </button>
         </div>
       </div>
 
-      <div class="account-note">
-        <strong>ゆるいルール</strong>
-        <p>注文したつもりなので、出費もカロリーもゼロのつもりです。</p>
+      <div class="account-section">
+        <h3>注文履歴</h3>
+
+        <div class="saving-list">
+          <div class="saving-row">
+            <span>今日の節約</span>
+            <strong id="accountTodaySaved">¥0</strong>
+          </div>
+
+          <div class="saving-row">
+            <span>今月の累計</span>
+            <strong id="accountMonthSaved">¥0</strong>
+          </div>
+
+          <div class="saving-row">
+            <span>今までの累計</span>
+            <strong id="accountTotalSaved">¥0</strong>
+          </div>
+        </div>
+
+        <div id="orderHistoryList" class="history-list"></div>
+      </div>
+
+      <div class="account-section">
+        <h3>節約グラフ</h3>
+
+        <div class="graph-card">
+          <div class="graph-head">
+            <strong>月毎累計</strong>
+            <span>過去6ヶ月</span>
+          </div>
+          <div id="monthlyChart" class="bar-chart"></div>
+        </div>
+
+        <div class="graph-card">
+          <div class="graph-head">
+            <strong>今までの累計</strong>
+            <span>積み上げ推移</span>
+          </div>
+          <div id="totalChart" class="line-chart"></div>
+        </div>
+      </div>
+
+      <div class="account-section">
+        <h3>各種設定</h3>
+
+        <div class="setting-card">
+          <label for="accountNameInput">アカウント名前変更</label>
+          <div class="name-edit">
+            <input id="accountNameInput" type="text" placeholder="名前を入力" />
+            <button id="saveAccountName" type="button">保存</button>
+          </div>
+        </div>
+
+        <button class="setting-row fake-setting" type="button">
+          <span>住所</span>
+          <strong>追加する</strong>
+        </button>
+
+        <button class="setting-row fake-setting" type="button">
+          <span>電話番号</span>
+          <strong>未登録</strong>
+        </button>
+
+        <button class="setting-row fake-setting" type="button">
+          <span>Eメールアドレス</span>
+          <strong>未登録</strong>
+        </button>
       </div>
     </section>
   </main>
 
   <nav class="bottom-nav">
-    <button class="nav-item active" data-target="home">
+    <button class="nav-item active" data-target="home" type="button">
       <span>🏠</span>
       <small>ホーム</small>
     </button>
 
-    <button class="nav-item" data-target="search">
+    <button class="nav-item" data-target="search" type="button">
       <span>🔍</span>
       <small>検索</small>
     </button>
 
-    <button class="nav-item cart-nav" data-target="cart">
+    <button class="nav-item cart-nav" data-target="cart" type="button">
       <span>🛒</span>
       <small>カート</small>
       <em id="cartCount" class="cart-count hidden">0</em>
     </button>
 
-    <button class="nav-item" data-target="account">
+    <button class="nav-item" data-target="account" type="button">
       <span>👤</span>
       <small>マイ</small>
     </button>
