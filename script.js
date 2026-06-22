@@ -1262,7 +1262,13 @@ function renderCategories() {
     const itemCount = category.stores.reduce((sum, store) => sum + store.items.length, 0);
 
     button.innerHTML = `
-      <span class="category-icon">${category.icon}</span>
+      <span class="category-icon">
+  ${
+    category.image
+      ? `<img src="${category.image}" alt="${category.category}">`
+      : category.icon
+  }
+</span>
       <span class="category-name">${category.category}</span>
       <span class="category-count">${category.stores.length}店舗・${itemCount}商品</span>
     `;
