@@ -6,8 +6,8 @@
 
   <title>食べたつもり便</title>
 
-  <link rel="stylesheet" href="style.css?v=9" />
-  <script src="script.js?v=9" defer></script>
+  <link rel="stylesheet" href="style.css?v=11" />
+  <script src="script.js?v=11" defer></script>
 </head>
 
 <body>
@@ -31,7 +31,7 @@
 
       <div class="section-title">
         <h2 id="storeTitle">お店を選ぶ</h2>
-        <p>近くにありそうなお店を選んでください</p>
+        <p>今週のお得な店舗を選んでください</p>
       </div>
 
       <div id="storeList" class="store-list"></div>
@@ -74,8 +74,20 @@
 
         <div class="price-summary">
           <div>
-            <span>小計</span>
+            <span>定価小計</span>
+            <strong id="checkoutOriginalSubtotal">¥0</strong>
+          </div>
+          <div>
+            <span>店舗割引</span>
+            <strong id="checkoutDiscount">-¥0</strong>
+          </div>
+          <div>
+            <span>割引後小計</span>
             <strong id="checkoutSubtotal">¥0</strong>
+          </div>
+          <div>
+            <span>1つ無料分</span>
+            <strong id="checkoutBogo">¥0分お得</strong>
           </div>
           <div>
             <span>配達料</span>
@@ -84,6 +96,10 @@
           <div>
             <span>サービス料 7%</span>
             <strong id="checkoutService">¥0</strong>
+          </div>
+          <div>
+            <span>合計カロリー</span>
+            <strong id="checkoutCalories">0kcal</strong>
           </div>
           <div class="total-line">
             <span>合計</span>
@@ -159,7 +175,7 @@
       <div class="account-section">
         <div class="account-section-head">
           <h3>注文履歴</h3>
-          <button id="resetAccountData" class="mini-danger-btn" type="button">リセット</button>
+          <button id="openResetModal" class="mini-danger-btn" type="button">リセット</button>
         </div>
 
         <div class="saving-list">
@@ -169,13 +185,28 @@
           </div>
 
           <div class="saving-row">
+            <span>今日のカロリー</span>
+            <strong id="accountTodayCalories">0kcal</strong>
+          </div>
+
+          <div class="saving-row">
             <span>今月の累計</span>
             <strong id="accountMonthSaved">¥0</strong>
           </div>
 
           <div class="saving-row">
+            <span>今月のカロリー</span>
+            <strong id="accountMonthCalories">0kcal</strong>
+          </div>
+
+          <div class="saving-row">
             <span>今までの累計</span>
             <strong id="accountTotalSaved">¥0</strong>
+          </div>
+
+          <div class="saving-row">
+            <span>今までのカロリー</span>
+            <strong id="accountTotalCalories">0kcal</strong>
           </div>
         </div>
 
@@ -188,7 +219,7 @@
         <div class="graph-card">
           <div class="graph-head">
             <strong>月毎累計</strong>
-            <span>過去6ヶ月</span>
+            <span>金額・カロリー</span>
           </div>
           <div id="monthlyChart" class="bar-chart"></div>
         </div>
@@ -253,5 +284,16 @@
       <small>マイ</small>
     </button>
   </nav>
+
+  <div id="resetModal" class="modal hidden">
+    <div class="modal-card">
+      <div class="modal-icon">🗑️</div>
+      <h2>履歴を削除しますか？</h2>
+      <p>注文履歴・節約金額・カロリー・グラフがすべてリセットされます。</p>
+
+      <button id="confirmResetData" class="danger-btn" type="button">削除する</button>
+      <button id="cancelResetData" class="sub-btn" type="button">キャンセル</button>
+    </div>
+  </div>
 </body>
 </html>
