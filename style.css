@@ -107,6 +107,7 @@ button {
   text-align: left;
   transition: transform 0.12s ease, box-shadow 0.12s ease;
 }
+
 .category-card:active,
 .store-card:active,
 .item-card:active,
@@ -137,24 +138,16 @@ button {
   display: block;
 }
 
-.category-count {
-  display: none;
-}
-
 .category-name {
   display: block;
   color: #111827;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 900;
   line-height: 1.35;
 }
 
 .category-count {
-  display: block;
-  margin-top: 4px;
-  color: var(--muted);
-  font-size: 12px;
-  font-weight: 700;
+  display: none;
 }
 
 .back-btn {
