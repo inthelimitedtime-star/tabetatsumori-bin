@@ -30,11 +30,12 @@ function menu(...items) {
 
 const CATEGORIES = [
   {
-   {
+   
   category: "ファストフード",
   icon: "🍟",
   image: "./fastfood.PNG",
-  stores: [
+  stores: [ 
+    {
         name: "パクっとキッチン",
         items: menu(
           ["ごちそうスマッシュバーガー", 980],
