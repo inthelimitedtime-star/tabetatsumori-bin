@@ -30,12 +30,11 @@ function menu(...items) {
 
 const CATEGORIES = [
   {
-   
-  category: "ファストフード",
-  icon: "🍟",
-  image: "./fastfood.PNG",
-  stores: [ 
-    {
+    category: "ファストフード",
+    icon: "🍟",
+    image: "./fastfood.PNG",
+    stores: [
+      {
         name: "パクっとキッチン",
         items: menu(
           ["ごちそうスマッシュバーガー", 980],
@@ -817,6 +816,19 @@ const clearCart = document.getElementById("clearCart");
 const resultHome = document.getElementById("resultHome");
 const resultAccount = document.getElementById("resultAccount");
 
+function safeText(element, text) {
+  if (element) element.textContent = text;
+}
+
+function safeHtml(element, html) {
+  if (element) element.innerHTML = html;
+}
+
+function addSafeEvent(element, eventName, handler) {
+  if (!element) return;
+  element.addEventListener(eventName, handler);
+}
+
 function getTodayString() {
   const d = new Date();
   return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
@@ -1000,8 +1012,11 @@ function addOrderHistory(order) {
 function renderAccountName() {
   const name = localStorage.getItem("accountName") || "ゲストさん";
 
-  accountNameDisplay.textContent = name;
-  accountNameInput.value = name;
+  safeText(accountNameDisplay, name);
+
+  if (accountNameInput) {
+    accountNameInput.value = name;
+  }
 }
 
 function renderAccount() {
@@ -1016,12 +1031,12 @@ function renderAccount() {
   const monthSaved = Number(monthlySavings[monthKey] || 0);
   const monthCalories = Number(monthlyCalories[monthKey] || 0);
 
-  accountTodaySaved.textContent = formatYen(todaySaved);
-  accountTodayCalories.textContent = formatKcal(todayCalories);
-  accountMonthSaved.textContent = formatYen(monthSaved);
-  accountMonthCalories.textContent = formatKcal(monthCalories);
-  accountTotalSaved.textContent = formatYen(totalSaved);
-  accountTotalCalories.textContent = formatKcal(totalCalories);
+  safeText(accountTodaySaved, formatYen(todaySaved));
+  safeText(accountTodayCalories, formatKcal(todayCalories));
+  safeText(accountMonthSaved, formatYen(monthSaved));
+  safeText(accountMonthCalories, formatKcal(monthCalories));
+  safeText(accountTotalSaved, formatYen(totalSaved));
+  safeText(accountTotalCalories, formatKcal(totalCalories));
 
   renderAccountName();
   renderOrderHistory();
@@ -1029,6 +1044,8 @@ function renderAccount() {
 }
 
 function renderOrderHistory() {
+  if (!orderHistoryList) return;
+
   const history = getOrderHistory();
 
   orderHistoryList.innerHTML = "";
@@ -1072,6 +1089,8 @@ function getLastSixMonths() {
 }
 
 function renderCharts() {
+  if (!monthlyChart || !totalChart) return;
+
   const monthlySavings = getMonthlySavings();
   const monthlyCalories = getMonthlyCalories();
   const months = getLastSixMonths();
@@ -1198,7 +1217,9 @@ function getCartSummary() {
 function updateCartCount() {
   const count = cart.length;
 
-  cartCount.textContent = count;
+  safeText(cartCount, count);
+
+  if (!cartCount) return;
 
   if (count === 0) {
     cartCount.classList.add("hidden");
@@ -1230,20 +1251,20 @@ function showScreen(name) {
     screen.classList.remove("active");
   });
 
-  if (name === "home") homeScreen.classList.add("active");
-  if (name === "store") storeScreen.classList.add("active");
-  if (name === "item") itemScreen.classList.add("active");
-  if (name === "search") searchScreen.classList.add("active");
-  if (name === "cart") cartScreen.classList.add("active");
-  if (name === "accepting") acceptingScreen.classList.add("active");
-  if (name === "result") resultScreen.classList.add("active");
-  if (name === "account") accountScreen.classList.add("active");
+  if (name === "home" && homeScreen) homeScreen.classList.add("active");
+  if (name === "store" && storeScreen) storeScreen.classList.add("active");
+  if (name === "item" && itemScreen) itemScreen.classList.add("active");
+  if (name === "search" && searchScreen) searchScreen.classList.add("active");
+  if (name === "cart" && cartScreen) cartScreen.classList.add("active");
+  if (name === "accepting" && acceptingScreen) acceptingScreen.classList.add("active");
+  if (name === "result" && resultScreen) resultScreen.classList.add("active");
+  if (name === "account" && accountScreen) accountScreen.classList.add("active");
 
   setActiveNav(name);
 
   if (name === "cart") renderCart();
   if (name === "account") renderAccount();
-  if (name === "search") renderSearch(searchInput.value);
+  if (name === "search" && searchInput) renderSearch(searchInput.value);
 
   window.scrollTo({
     top: 0,
@@ -1252,6 +1273,8 @@ function showScreen(name) {
 }
 
 function renderCategories() {
+  if (!categoryList) return;
+
   categoryList.innerHTML = "";
 
   CATEGORIES.forEach((category, index) => {
@@ -1277,9 +1300,12 @@ function renderCategories() {
 }
 
 function renderStores() {
-  const category = CATEGORIES[selectedCategoryIndex];
+  if (!storeList || selectedCategoryIndex === null) return;
 
-  storeTitle.textContent = `${category.category}のお店`;
+  const category = CATEGORIES[selectedCategoryIndex];
+  if (!category) return;
+
+  safeText(storeTitle, `${category.category}のお店`);
   storeList.innerHTML = "";
 
   category.stores.forEach((store, index) => {
@@ -1306,10 +1332,15 @@ function renderStores() {
 }
 
 function renderItems() {
-  const category = CATEGORIES[selectedCategoryIndex];
-  const store = category.stores[selectedStoreIndex];
+  if (!itemList || selectedCategoryIndex === null || selectedStoreIndex === null) return;
 
-  itemTitle.textContent = store.name;
+  const category = CATEGORIES[selectedCategoryIndex];
+  if (!category) return;
+
+  const store = category.stores[selectedStoreIndex];
+  if (!store) return;
+
+  safeText(itemTitle, store.name);
   itemList.innerHTML = "";
 
   store.items.forEach((item, index) => {
@@ -1347,8 +1378,13 @@ function renderItems() {
 
 function addToCart(categoryIndex, storeIndex, itemIndex) {
   const category = CATEGORIES[categoryIndex];
+  if (!category) return;
+
   const store = category.stores[storeIndex];
+  if (!store) return;
+
   const item = store.items[itemIndex];
+  if (!item) return;
 
   const discountRate = getStoreDiscountRate(store.name);
   const chargedPrice = getDiscountedPrice(item.price, store.name);
@@ -1381,6 +1417,8 @@ function addToCart(categoryIndex, storeIndex, itemIndex) {
 }
 
 function renderCart() {
+  if (!checkoutList) return;
+
   checkoutList.innerHTML = "";
 
   if (cart.length === 0) {
@@ -1415,20 +1453,25 @@ function renderCart() {
 
   const summary = getCartSummary();
 
-  checkoutOriginalSubtotal.textContent = formatYen(summary.originalSubtotal);
-  checkoutDiscount.textContent = `-${formatYen(summary.discountAmount)}`;
-  checkoutSubtotal.textContent = formatYen(summary.subtotal);
-  checkoutBogo.textContent = `${formatYen(summary.bogoValue)}分お得`;
-  checkoutDelivery.textContent = `${formatYen(summary.deliveryFee)}（${summary.storeCount}店舗）`;
-  checkoutService.textContent = formatYen(summary.serviceFee);
-  checkoutCalories.textContent = formatKcal(summary.kcalTotal);
-  checkoutTotal.textContent = formatYen(summary.total);
-  confirmOrder.disabled = cart.length === 0;
+  safeText(checkoutOriginalSubtotal, formatYen(summary.originalSubtotal));
+  safeText(checkoutDiscount, `-${formatYen(summary.discountAmount)}`);
+  safeText(checkoutSubtotal, formatYen(summary.subtotal));
+  safeText(checkoutBogo, `${formatYen(summary.bogoValue)}分お得`);
+  safeText(checkoutDelivery, `${formatYen(summary.deliveryFee)}（${summary.storeCount}店舗）`);
+  safeText(checkoutService, formatYen(summary.serviceFee));
+  safeText(checkoutCalories, formatKcal(summary.kcalTotal));
+  safeText(checkoutTotal, formatYen(summary.total));
+
+  if (confirmOrder) {
+    confirmOrder.disabled = cart.length === 0;
+  }
 
   updateCartCount();
 }
 
 function updateClearSearchButton() {
+  if (!clearSearch || !searchInput) return;
+
   if (searchInput.value.trim()) {
     clearSearch.classList.remove("hidden");
   } else {
@@ -1437,6 +1480,8 @@ function updateClearSearchButton() {
 }
 
 function renderSearch(query) {
+  if (!searchResults) return;
+
   const q = query.trim().toLowerCase();
   searchResults.innerHTML = "";
   updateClearSearchButton();
@@ -1578,22 +1623,22 @@ function startAccepting() {
 
   showScreen("accepting");
 
-  acceptStatus.textContent = "注文を受け付けたつもりです";
+  safeText(acceptStatus, "注文を受け付けたつもりです");
 
   acceptTimers.push(setTimeout(() => {
-    acceptStatus.textContent = "お店が注文を確認しているつもりです";
+    safeText(acceptStatus, "お店が注文を確認しているつもりです");
   }, 700));
 
   acceptTimers.push(setTimeout(() => {
-    acceptStatus.textContent = "調理しているつもりです";
+    safeText(acceptStatus, "調理しているつもりです");
   }, 1400));
 
   acceptTimers.push(setTimeout(() => {
-    acceptStatus.textContent = "配達員が向かっているつもりです";
+    safeText(acceptStatus, "配達員が向かっているつもりです");
   }, 2100));
 
   acceptTimers.push(setTimeout(() => {
-    acceptStatus.textContent = "受付完了しました";
+    safeText(acceptStatus, "受付完了しました");
   }, 2800));
 
   acceptTimers.push(setTimeout(() => {
@@ -1603,7 +1648,7 @@ function startAccepting() {
 }
 
 function renderResult() {
-  if (!latestOrder) return;
+  if (!latestOrder || !resultText) return;
 
   const itemNames = latestOrder.items.map((item) => {
     return `
@@ -1614,7 +1659,7 @@ function renderResult() {
     `;
   }).join("");
 
-  resultTitle.textContent = `${latestOrder.items.length}品を食べたつもり！`;
+  safeText(resultTitle, `${latestOrder.items.length}品を食べたつもり！`);
 
   resultText.innerHTML = `
     <div class="result-order-list">
@@ -1666,11 +1711,11 @@ function renderResult() {
 }
 
 function showResetModal() {
-  resetModal.classList.remove("hidden");
+  if (resetModal) resetModal.classList.remove("hidden");
 }
 
 function hideResetModal() {
-  resetModal.classList.add("hidden");
+  if (resetModal) resetModal.classList.add("hidden");
 }
 
 function resetHistoryAndGraph() {
@@ -1735,7 +1780,7 @@ function returnToLastStore() {
   }
 }
 
-categoryList.addEventListener("click", (event) => {
+addSafeEvent(categoryList, "click", (event) => {
   const card = event.target.closest(".category-card");
   if (!card) return;
 
@@ -1744,7 +1789,7 @@ categoryList.addEventListener("click", (event) => {
   showScreen("store");
 });
 
-storeList.addEventListener("click", (event) => {
+addSafeEvent(storeList, "click", (event) => {
   const card = event.target.closest(".store-card");
   if (!card) return;
 
@@ -1757,7 +1802,7 @@ storeList.addEventListener("click", (event) => {
   showScreen("item");
 });
 
-itemList.addEventListener("click", (event) => {
+addSafeEvent(itemList, "click", (event) => {
   const card = event.target.closest(".item-card");
   if (!card) return;
 
@@ -1765,7 +1810,7 @@ itemList.addEventListener("click", (event) => {
   addToCart(selectedCategoryIndex, selectedStoreIndex, itemIndex);
 });
 
-checkoutList.addEventListener("click", (event) => {
+addSafeEvent(checkoutList, "click", (event) => {
   const removeButton = event.target.closest(".remove-item");
   if (!removeButton) return;
 
@@ -1776,17 +1821,19 @@ checkoutList.addEventListener("click", (event) => {
   renderCart();
 });
 
-searchInput.addEventListener("input", () => {
+addSafeEvent(searchInput, "input", () => {
   renderSearch(searchInput.value);
 });
 
-clearSearch.addEventListener("click", () => {
+addSafeEvent(clearSearch, "click", () => {
+  if (!searchInput) return;
+
   searchInput.value = "";
   renderSearch("");
   searchInput.focus();
 });
 
-searchResults.addEventListener("click", (event) => {
+addSafeEvent(searchResults, "click", (event) => {
   const card = event.target.closest(".search-result");
   if (!card) return;
 
@@ -1825,8 +1872,9 @@ document.querySelectorAll(".nav-item").forEach((button) => {
 
     if (target === "search") {
       showScreen("search");
+
       setTimeout(() => {
-        searchInput.focus();
+        if (searchInput) searchInput.focus();
       }, 100);
     }
 
@@ -1835,37 +1883,39 @@ document.querySelectorAll(".nav-item").forEach((button) => {
   });
 });
 
-backToCategories.addEventListener("click", () => {
+addSafeEvent(backToCategories, "click", () => {
   showScreen("home");
 });
 
-backToStores.addEventListener("click", () => {
+addSafeEvent(backToStores, "click", () => {
   showScreen("store");
 });
 
-continueShopping.addEventListener("click", () => {
+addSafeEvent(continueShopping, "click", () => {
   returnToLastStore();
 });
 
-clearCart.addEventListener("click", () => {
+addSafeEvent(clearCart, "click", () => {
   cart = [];
   saveCart();
   renderCart();
 });
 
-confirmOrder.addEventListener("click", () => {
+addSafeEvent(confirmOrder, "click", () => {
   startAccepting();
 });
 
-resultHome.addEventListener("click", () => {
+addSafeEvent(resultHome, "click", () => {
   showScreen("home");
 });
 
-resultAccount.addEventListener("click", () => {
+addSafeEvent(resultAccount, "click", () => {
   showScreen("account");
 });
 
-saveAccountName.addEventListener("click", () => {
+addSafeEvent(saveAccountName, "click", () => {
+  if (!accountNameInput) return;
+
   const name = accountNameInput.value.trim() || "ゲストさん";
 
   localStorage.setItem("accountName", name);
@@ -1873,25 +1923,25 @@ saveAccountName.addEventListener("click", () => {
   showToast("アカウント名を変更しました");
 });
 
-accountNameInput.addEventListener("keydown", (event) => {
-  if (event.key === "Enter") {
+addSafeEvent(accountNameInput, "keydown", (event) => {
+  if (event.key === "Enter" && saveAccountName) {
     saveAccountName.click();
   }
 });
 
-openResetModal.addEventListener("click", () => {
+addSafeEvent(openResetModal, "click", () => {
   showResetModal();
 });
 
-cancelResetData.addEventListener("click", () => {
+addSafeEvent(cancelResetData, "click", () => {
   hideResetModal();
 });
 
-confirmResetData.addEventListener("click", () => {
+addSafeEvent(confirmResetData, "click", () => {
   resetHistoryAndGraph();
 });
 
-resetModal.addEventListener("click", (event) => {
+addSafeEvent(resetModal, "click", (event) => {
   if (event.target === resetModal) {
     hideResetModal();
   }
