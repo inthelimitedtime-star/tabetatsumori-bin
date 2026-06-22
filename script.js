@@ -771,6 +771,8 @@ const storeTitle = document.getElementById("storeTitle");
 const itemTitle = document.getElementById("itemTitle");
 
 const checkoutSubtotal = document.getElementById("checkoutSubtotal");
+const checkoutDelivery = document.getElementById("checkoutDelivery");
+const checkoutService = document.getElementById("checkoutService");
 const checkoutTotal = document.getElementById("checkoutTotal");
 const cartCount = document.getElementById("cartCount");
 
@@ -787,6 +789,7 @@ const accountTotalSaved = document.getElementById("accountTotalSaved");
 const orderHistoryList = document.getElementById("orderHistoryList");
 const monthlyChart = document.getElementById("monthlyChart");
 const totalChart = document.getElementById("totalChart");
+const resetAccountData = document.getElementById("resetAccountData");
 
 const backToCategories = document.getElementById("backToCategories");
 const backToStores = document.getElementById("backToStores");
@@ -1011,8 +1014,27 @@ function renderCharts() {
   });
 }
 
-function getCartTotal() {
+function getCartSubtotal() {
   return cart.reduce((sum, item) => sum + item.price, 0);
+}
+
+function getStoreCount() {
+  const stores = new Set(cart.map((item) => item.store));
+  return stores.size;
+}
+
+function getDeliveryFee() {
+  if (cart.length === 0) return 0;
+  return getStoreCount() * 100;
+}
+
+function getServiceFee() {
+  const subtotal = getCartSubtotal();
+  return Math.round(subtotal * 0.07);
+}
+
+function getCartTotal() {
+  return getCartSubtotal() + getDeliveryFee() + getServiceFee();
 }
 
 function updateCartCount() {
@@ -1108,7 +1130,7 @@ function renderStores() {
       <div class="store-card-top">
         <div>
           <strong>${store.name}</strong>
-          <span>${store.items.length}件の商品・配達料 ¥0 のつもり</span>
+          <span>${store.items.length}件の商品・配達料 ¥100 のつもり</span>
         </div>
         <div class="store-badge">15-25分</div>
       </div>
@@ -1150,6 +1172,9 @@ function addToCart(categoryIndex, storeIndex, itemIndex) {
   const category = CATEGORIES[categoryIndex];
   const store = category.stores[storeIndex];
   const item = store.items[itemIndex];
+
+  selectedCategoryIndex = categoryIndex;
+  selectedStoreIndex = storeIndex;
 
   cart.push({
     id: `${Date.now()}-${Math.random()}`,
@@ -1195,9 +1220,14 @@ function renderCart() {
     checkoutList.appendChild(row);
   });
 
+  const subtotal = getCartSubtotal();
+  const deliveryFee = getDeliveryFee();
+  const serviceFee = getServiceFee();
   const total = getCartTotal();
 
-  checkoutSubtotal.textContent = formatYen(total);
+  checkoutSubtotal.textContent = formatYen(subtotal);
+  checkoutDelivery.textContent = `${formatYen(deliveryFee)}（${getStoreCount()}店舗）`;
+  checkoutService.textContent = formatYen(serviceFee);
   checkoutTotal.textContent = formatYen(total);
   confirmOrder.disabled = cart.length === 0;
 
@@ -1320,6 +1350,11 @@ function startAccepting() {
 
   clearAcceptTimers();
 
+  const subtotal = getCartSubtotal();
+  const deliveryFee = getDeliveryFee();
+  const serviceFee = getServiceFee();
+  const total = getCartTotal();
+
   latestOrder = {
     id: `${Date.now()}-${Math.random()}`,
     date: new Date().toISOString(),
@@ -1331,7 +1366,10 @@ function startAccepting() {
     }),
     month: getMonthKey(),
     items: [...cart],
-    total: getCartTotal()
+    subtotal,
+    deliveryFee,
+    serviceFee,
+    total
   };
 
   addSavings(latestOrder.total);
@@ -1400,8 +1438,23 @@ function renderResult() {
       </ul>
     </div>
 
+    <div class="result-fee-list">
+      <div>
+        <span>小計</span>
+        <strong>${formatYen(latestOrder.subtotal)}</strong>
+      </div>
+      <div>
+        <span>配達料</span>
+        <strong>${formatYen(latestOrder.deliveryFee)}</strong>
+      </div>
+      <div>
+        <span>サービス料 7%</span>
+        <strong>${formatYen(latestOrder.serviceFee)}</strong>
+      </div>
+    </div>
+
     <div class="result-total">
-      <span>今回の節約</span>
+      <span>今回の節約合計</span>
       <strong>${formatYen(latestOrder.total)}</strong>
     </div>
 
@@ -1409,6 +1462,20 @@ function renderResult() {
       注文したつもりなので、出費もカロリーもゼロのつもりです。
     </p>
   `;
+}
+
+function resetHistoryAndGraph() {
+  const ok = confirm("注文履歴と節約グラフをリセットしますか？");
+
+  if (!ok) return;
+
+  localStorage.setItem("todaySaved", "0");
+  localStorage.setItem("totalSaved", "0");
+  localStorage.setItem("monthlySavings", "{}");
+  localStorage.setItem("orderHistory", "[]");
+
+  renderAccount();
+  showToast("注文履歴と節約グラフをリセットしました");
 }
 
 function showToast(message) {
@@ -1538,7 +1605,12 @@ backToStores.addEventListener("click", () => {
 });
 
 continueShopping.addEventListener("click", () => {
-  showScreen("home");
+  if (selectedCategoryIndex !== null && selectedStoreIndex !== null) {
+    renderItems();
+    showScreen("item");
+  } else {
+    showScreen("home");
+  }
 });
 
 clearCart.addEventListener("click", () => {
@@ -1571,6 +1643,10 @@ accountNameInput.addEventListener("keydown", (event) => {
   if (event.key === "Enter") {
     saveAccountName.click();
   }
+});
+
+resetAccountData.addEventListener("click", () => {
+  resetHistoryAndGraph();
 });
 
 loadCart();
