@@ -32,6 +32,7 @@ const CATEGORIES = [
   {
     category: "ファストフード",
     icon: "🍟",
+    image: "img/fastfoodカテゴリ.png",
     stores: [
       {
         name: "パクっとキッチン",
