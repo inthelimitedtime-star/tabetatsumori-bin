@@ -3,7 +3,22 @@
 const STORAGE_KEY = 'tabetatsumori_mvp_v02';
 
 const MENUS = [
-  { id: 'ramen', name: 'ラーメン', emoji: '🍜', price: 980, cal: 750, category: 'ラーメン', desc: '深夜に一番あぶないやつ' },
+  const SHOP_DATA = [
+  {
+    category: 'ラーメン',
+    icon: '🍜',
+    stores: [
+      {
+        id: 'ramen_kotteri',
+        name: 'こってり横丁',
+        desc: '濃厚系ラーメンの誘惑',
+        products: [
+          { id: 'ramen_kotteri_01', name: '特製こってりラーメン', emoji: '🍜', price: 980, cal: 850 }
+        ]
+      }
+    ]
+  }
+];
   { id: 'pizza', name: 'ピザ', emoji: '🍕', price: 1680, cal: 1100, category: 'ファストフード', desc: '一切れのつもりが箱ごといく' },
   { id: 'sushi', name: '寿司', emoji: '🍣', price: 1480, cal: 650, category: '外食', desc: '今日は贅沢したつもり' },
   { id: 'karaage', name: '唐揚げ弁当', emoji: '🍱', price: 850, cal: 900, category: '弁当', desc: '揚げ物欲をここで成仏' },
