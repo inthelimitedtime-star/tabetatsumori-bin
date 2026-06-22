@@ -3,66 +3,173 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>食べたつもり便</title>
-  <link rel="stylesheet" href="style.css?v=2" />
+
+  <link rel="stylesheet" href="style.css?v=6" />
+  <script src="script.js?v=6" defer></script>
 </head>
+
 <body>
   <main class="app">
     <header class="top-header">
-      <div>
-        <h1>食べたつもり便</h1>
-        <p>食べたいものを好きなだけ</p>
-      </div>
+      <h1>食べたつもり便</h1>
+      <p>食べたいものを好きなだけ</p>
     </header>
 
-    <section class="summary-bar">
-      <div class="summary-card">
-        <span>今日の節約</span>
-        <strong id="todaySaved">¥0</strong>
-      </div>
-      <div class="summary-card">
-        <span>累計</span>
-        <strong id="totalSaved">¥0</strong>
-      </div>
-    </section>
-
-    <section id="categorySection" class="screen active">
+    <section id="homeScreen" class="screen active">
       <div class="section-title">
-        <h2>カテゴリ</h2>
-        <p>食べたつもりになりたいジャンルを選んでください</p>
+        <h2>メニュー</h2>
+        <p>今日は何を食べたつもりにしますか？</p>
       </div>
+
       <div id="categoryList" class="category-grid"></div>
     </section>
 
-    <section id="storeSection" class="screen">
-      <button id="backToCategories" class="back-btn">← カテゴリ</button>
+    <section id="storeScreen" class="screen">
+      <button id="backToCategories" class="back-btn">← メニュー</button>
+
       <div class="section-title">
         <h2 id="storeTitle">お店を選ぶ</h2>
         <p>近くにありそうなお店を選んでください</p>
       </div>
+
       <div id="storeList" class="store-list"></div>
     </section>
 
-    <section id="itemSection" class="screen">
+    <section id="itemScreen" class="screen">
       <button id="backToStores" class="back-btn">← お店</button>
+
       <div class="section-title">
         <h2 id="itemTitle">商品を選ぶ</h2>
-        <p>食べたいものを好きなだけ選んだつもりでOK</p>
+        <p>商品をタップするとカートに追加されます</p>
       </div>
+
       <div id="itemList" class="item-list"></div>
     </section>
 
-    <section id="resultSection" class="screen">
+    <section id="searchScreen" class="screen">
+      <div class="section-title">
+        <h2>検索</h2>
+        <p>メニュー・店舗・商品を探せます</p>
+      </div>
+
+      <div class="search-box">
+        <span>🔍</span>
+        <input id="searchInput" type="search" placeholder="ラーメン、カレー、チキンなど" />
+      </div>
+
+      <div id="searchResults" class="search-results"></div>
+    </section>
+
+    <section id="cartScreen" class="screen">
+      <div class="section-title">
+        <h2>お会計確認</h2>
+        <p>注文したつもりの内容を確認してください</p>
+      </div>
+
+      <div class="checkout-card">
+        <div id="checkoutList" class="checkout-list"></div>
+
+        <div class="price-summary">
+          <div>
+            <span>小計</span>
+            <strong id="checkoutSubtotal">¥0</strong>
+          </div>
+          <div>
+            <span>配達料</span>
+            <strong>¥0 のつもり</strong>
+          </div>
+          <div>
+            <span>サービス料</span>
+            <strong>¥0 のつもり</strong>
+          </div>
+          <div class="total-line">
+            <span>今回の節約</span>
+            <strong id="checkoutTotal">¥0</strong>
+          </div>
+        </div>
+
+        <button id="confirmOrder" class="main-btn">注文したつもりで受付する</button>
+        <button id="continueShopping" class="sub-btn">商品を追加する</button>
+        <button id="clearCart" class="text-btn">カートを空にする</button>
+      </div>
+    </section>
+
+    <section id="acceptingScreen" class="screen">
+      <div class="accept-card">
+        <div class="accept-icon">🛵</div>
+        <p id="acceptStatus" class="accept-status">注文を受け付けたつもりです</p>
+
+        <div class="accept-line">
+          <span></span>
+        </div>
+      </div>
+    </section>
+
+    <section id="resultScreen" class="screen">
       <div class="result-card">
-        <div class="delivery-icon">🛵</div>
-        <p id="deliveryStatus" class="delivery-status">注文を受け付けたつもりです</p>
-        <h2 id="resultTitle"></h2>
-        <p id="resultText"></p>
-        <button id="orderAgain" class="main-btn">もう一品選ぶ</button>
+        <div class="result-icon">🎉</div>
+        <p class="delivery-status">受付完了</p>
+        <h2 id="resultTitle">食べたつもり完了！</h2>
+        <div id="resultText" class="result-text"></div>
+
+        <button id="resultHome" class="main-btn">ホームに戻る</button>
+        <button id="resultAccount" class="sub-btn">マイアカウントを見る</button>
+      </div>
+    </section>
+
+    <section id="accountScreen" class="screen">
+      <div class="section-title">
+        <h2>マイアカウント</h2>
+        <p>食べたつもりで節約できた金額</p>
+      </div>
+
+      <div class="account-card">
+        <div class="account-avatar">😋</div>
+        <h3>ゲストさん</h3>
+        <p>今日も食べたつもりでえらい</p>
+      </div>
+
+      <div class="saving-list">
+        <div class="saving-row">
+          <span>今日の節約</span>
+          <strong id="accountTodaySaved">¥0</strong>
+        </div>
+        <div class="saving-row">
+          <span>累計</span>
+          <strong id="accountTotalSaved">¥0</strong>
+        </div>
+      </div>
+
+      <div class="account-note">
+        <strong>ゆるいルール</strong>
+        <p>注文したつもりなので、出費もカロリーもゼロのつもりです。</p>
       </div>
     </section>
   </main>
 
-  <script src="script.js?v=2"></script>
+  <nav class="bottom-nav">
+    <button class="nav-item active" data-target="home">
+      <span>🏠</span>
+      <small>ホーム</small>
+    </button>
+
+    <button class="nav-item" data-target="search">
+      <span>🔍</span>
+      <small>検索</small>
+    </button>
+
+    <button class="nav-item cart-nav" data-target="cart">
+      <span>🛒</span>
+      <small>カート</small>
+      <em id="cartCount" class="cart-count hidden">0</em>
+    </button>
+
+    <button class="nav-item" data-target="account">
+      <span>👤</span>
+      <small>マイ</small>
+    </button>
+  </nav>
 </body>
 </html>
