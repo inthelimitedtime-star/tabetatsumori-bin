@@ -762,26 +762,22 @@ const deliveryStatus = document.getElementById("deliveryStatus");
 const resultTitle = document.getElementById("resultTitle");
 const resultText = document.getElementById("resultText");
 
-document.getElementById("backToCategories").addEventListener("click", () => {
-  showScreen("category");
-});
-
-document.getElementById("backToStores").addEventListener("click", () => {
-  showScreen("store");
-});
-
-document.getElementById("orderAgain").addEventListener("click", () => {
-  showScreen("category");
-});
+const backToCategories = document.getElementById("backToCategories");
+const backToStores = document.getElementById("backToStores");
+const orderAgain = document.getElementById("orderAgain");
 
 function getTodayString() {
   const d = new Date();
   return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
 }
 
+function formatYen(num) {
+  return `¥${Number(num).toLocaleString()}`;
+}
+
 function loadSavings() {
-  const savedDate = localStorage.getItem("savedDate");
   const today = getTodayString();
+  const savedDate = localStorage.getItem("savedDate");
 
   if (savedDate !== today) {
     localStorage.setItem("savedDate", today);
@@ -805,64 +801,70 @@ function addSavings(amount) {
   loadSavings();
 }
 
-function formatYen(num) {
-  return `¥${num.toLocaleString()}`;
-}
-
-function showScreen(screenName) {
+function showScreen(name) {
   categorySection.classList.remove("active");
   storeSection.classList.remove("active");
   itemSection.classList.remove("active");
   resultSection.classList.remove("active");
 
-  if (screenName === "category") categorySection.classList.add("active");
-  if (screenName === "store") storeSection.classList.add("active");
-  if (screenName === "item") itemSection.classList.add("active");
-  if (screenName === "result") resultSection.classList.add("active");
+  if (name === "category") {
+    categorySection.classList.add("active");
+  }
+
+  if (name === "store") {
+    storeSection.classList.add("active");
+  }
+
+  if (name === "item") {
+    itemSection.classList.add("active");
+  }
+
+  if (name === "result") {
+    resultSection.classList.add("active");
+  }
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
 }
 
 function renderCategories() {
   categoryList.innerHTML = "";
 
   CATEGORIES.forEach((category, index) => {
-    const card = document.createElement("button");
-    card.className = "category-card";
-    card.innerHTML = `
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "category-card";
+    button.dataset.index = index;
+
+    button.innerHTML = `
       <span class="category-icon">${category.icon}</span>
       <span class="category-name">${category.category}</span>
     `;
 
-    card.addEventListener("click", () => {
-      selectedCategoryIndex = index;
-      renderStores();
-      showScreen("store");
-    });
-
-    categoryList.appendChild(card);
+    categoryList.appendChild(button);
   });
 }
 
 function renderStores() {
   const category = CATEGORIES[selectedCategoryIndex];
 
-  storeTitle.textContent = `${category.category}のお店を選ぶ`;
+  storeTitle.textContent = `${category.category}のお店`;
   storeList.innerHTML = "";
 
   category.stores.forEach((store, index) => {
-    const card = document.createElement("button");
-    card.className = "store-card";
-    card.innerHTML = `
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "store-card";
+    button.dataset.index = index;
+
+    button.innerHTML = `
       <strong>${store.name}</strong>
-      <span>${store.items.length}件の商品</span>
+      <span>${store.items.length}件の商品・配達料 ¥0 のつもり</span>
     `;
 
-    card.addEventListener("click", () => {
-      selectedStoreIndex = index;
-      renderItems();
-      showScreen("item");
-    });
-
-    storeList.appendChild(card);
+    storeList.appendChild(button);
   });
 }
 
@@ -870,31 +872,40 @@ function renderItems() {
   const category = CATEGORIES[selectedCategoryIndex];
   const store = category.stores[selectedStoreIndex];
 
-  itemTitle.textContent = `${store.name}の商品を選ぶ`;
+  itemTitle.textContent = store.name;
   itemList.innerHTML = "";
 
-  store.items.forEach((item) => {
-    const row = document.createElement("button");
-    row.className = "item-card";
-    row.innerHTML = `
+  store.items.forEach((item, index) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "item-card";
+    button.dataset.index = index;
+
+    button.innerHTML = `
       <span>${item.name}</span>
       <strong>${formatYen(item.price)}</strong>
     `;
 
-    row.addEventListener("click", () => {
-      orderItem(category, store, item);
-    });
-
-    itemList.appendChild(row);
+    itemList.appendChild(button);
   });
 }
 
-function orderItem(category, store, item) {
+function orderItem(item) {
+  const category = CATEGORIES[selectedCategoryIndex];
+  const store = category.stores[selectedStoreIndex];
+
   addSavings(item.price);
 
   showScreen("result");
 
   deliveryStatus.textContent = "注文を受け付けたつもりです";
+  resultTitle.textContent = `${item.name}を食べたつもり！`;
+
+  resultText.innerHTML = `
+    ${store.name}<br>
+    ${category.category}<br>
+    節約できた金額：<strong>${formatYen(item.price)}</strong>
+  `;
 
   setTimeout(() => {
     deliveryStatus.textContent = "調理しているつもりです";
@@ -907,15 +918,48 @@ function orderItem(category, store, item) {
   setTimeout(() => {
     deliveryStatus.textContent = "届いたつもりです";
   }, 2100);
-
-  resultTitle.textContent = `${item.name}を食べたつもり！`;
-
-  resultText.innerHTML = `
-    <span>カテゴリ：${category.category}</span><br>
-    <span>店舗：${store.name}</span><br>
-    <span>節約できた金額：<strong>${formatYen(item.price)}</strong></span>
-  `;
 }
+
+categoryList.addEventListener("click", (event) => {
+  const card = event.target.closest(".category-card");
+  if (!card) return;
+
+  selectedCategoryIndex = Number(card.dataset.index);
+  renderStores();
+  showScreen("store");
+});
+
+storeList.addEventListener("click", (event) => {
+  const card = event.target.closest(".store-card");
+  if (!card) return;
+
+  selectedStoreIndex = Number(card.dataset.index);
+  renderItems();
+  showScreen("item");
+});
+
+itemList.addEventListener("click", (event) => {
+  const card = event.target.closest(".item-card");
+  if (!card) return;
+
+  const category = CATEGORIES[selectedCategoryIndex];
+  const store = category.stores[selectedStoreIndex];
+  const item = store.items[Number(card.dataset.index)];
+
+  orderItem(item);
+});
+
+backToCategories.addEventListener("click", () => {
+  showScreen("category");
+});
+
+backToStores.addEventListener("click", () => {
+  showScreen("store");
+});
+
+orderAgain.addEventListener("click", () => {
+  showScreen("category");
+});
 
 loadSavings();
 renderCategories();
