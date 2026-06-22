@@ -201,6 +201,17 @@ button {
   flex: 0 0 auto;
   padding: 6px 9px;
   border-radius: 999px;
+  background: #fff1f2;
+  color: #e11d48;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.store-sub-badge {
+  display: inline-block;
+  margin-top: 9px;
+  padding: 6px 9px;
+  border-radius: 999px;
   background: #f0fdf4;
   color: var(--green-dark);
   font-size: 12px;
@@ -255,11 +266,58 @@ button {
   font-weight: 700;
 }
 
+.item-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 7px;
+}
+
+.deal-tag,
+.bogo-tag,
+.kcal-tag {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 4px 7px;
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.deal-tag {
+  background: #fff1f2;
+  color: #e11d48;
+}
+
+.bogo-tag {
+  background: #f0fdf4;
+  color: var(--green-dark);
+}
+
+.kcal-tag {
+  background: #f3f4f6;
+  color: #4b5563;
+}
+
+.item-price-wrap {
+  text-align: right;
+  white-space: nowrap;
+}
+
 .item-price {
+  display: block;
   color: #111827;
   font-size: 16px;
   font-weight: 900;
-  white-space: nowrap;
+}
+
+.item-old-price {
+  display: block;
+  margin-bottom: 3px;
+  color: #9ca3af;
+  font-size: 12px;
+  font-weight: 800;
+  text-decoration: line-through;
 }
 
 .search-box {
@@ -414,6 +472,13 @@ button {
   white-space: nowrap;
 }
 
+.checkout-price .old {
+  display: block;
+  color: #9ca3af;
+  font-size: 12px;
+  text-decoration: line-through;
+}
+
 .remove-item {
   display: block;
   margin-top: 6px;
@@ -438,6 +503,7 @@ button {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 12px;
 }
 
 .price-summary span {
@@ -450,6 +516,7 @@ button {
   color: #111827;
   font-size: 15px;
   font-weight: 900;
+  text-align: right;
 }
 
 .price-summary .total-line {
@@ -467,7 +534,8 @@ button {
 
 .main-btn,
 .sub-btn,
-.text-btn {
+.text-btn,
+.danger-btn {
   width: 100%;
   border-radius: 18px;
   padding: 15px 18px;
@@ -496,6 +564,11 @@ button {
   margin-top: 4px;
   background: transparent;
   color: var(--muted);
+}
+
+.danger-btn {
+  background: #e11d48;
+  color: #ffffff;
 }
 
 .accept-card {
@@ -780,6 +853,7 @@ button {
   color: var(--green-dark);
   font-size: 23px;
   font-weight: 900;
+  text-align: right;
 }
 
 .history-list {
@@ -847,7 +921,7 @@ button {
 }
 
 .bar-chart {
-  height: 178px;
+  height: 205px;
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   gap: 8px;
@@ -891,7 +965,8 @@ button {
   text-align: center;
   font-size: 10px;
   font-weight: 900;
-  min-height: 24px;
+  min-height: 42px;
+  line-height: 1.35;
 }
 
 .line-chart {
@@ -901,7 +976,7 @@ button {
 
 .line-row {
   display: grid;
-  grid-template-columns: 46px 1fr 64px;
+  grid-template-columns: 46px 1fr 82px;
   align-items: center;
   gap: 8px;
 }
@@ -930,8 +1005,9 @@ button {
 .line-value {
   color: #111827;
   text-align: right;
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 900;
+  line-height: 1.35;
 }
 
 .setting-card {
@@ -1072,7 +1148,7 @@ button {
 }
 
 .hidden {
-  display: none;
+  display: none !important;
 }
 
 .toast {
@@ -1091,6 +1167,53 @@ button {
   font-weight: 900;
   transform: translateX(-50%);
   animation: toastIn 1.6s ease forwards;
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background: rgba(17, 24, 39, 0.45);
+  backdrop-filter: blur(8px);
+}
+
+.modal-card {
+  width: 100%;
+  max-width: 420px;
+  padding: 24px 18px;
+  border-radius: 28px;
+  background: #ffffff;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.22);
+  text-align: center;
+}
+
+.modal-icon {
+  width: 70px;
+  height: 70px;
+  display: grid;
+  place-items: center;
+  margin: 0 auto 12px;
+  border-radius: 24px;
+  background: #fff1f2;
+  font-size: 34px;
+}
+
+.modal-card h2 {
+  margin: 0;
+  color: #111827;
+  font-size: 24px;
+  font-weight: 900;
+}
+
+.modal-card p {
+  margin: 10px 0 18px;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.7;
 }
 
 @keyframes scooterMove {
