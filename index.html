@@ -4,45 +4,57 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>食べたつもり便</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css?v=2" />
 </head>
 <body>
   <main class="app">
-    <header class="hero">
-      <h1>食べたつもり便</h1>
-      <p>食べたいものを好きなだけ</p>
+    <header class="top-header">
+      <div>
+        <h1>食べたつもり便</h1>
+        <p>食べたいものを好きなだけ</p>
+      </div>
     </header>
 
-    <section class="saving-box">
-      <div>
-        <span class="label">今日の節約</span>
+    <section class="summary-bar">
+      <div class="summary-card">
+        <span>今日の節約</span>
         <strong id="todaySaved">¥0</strong>
       </div>
-      <div>
-        <span class="label">累計</span>
+      <div class="summary-card">
+        <span>累計</span>
         <strong id="totalSaved">¥0</strong>
       </div>
     </section>
 
     <section id="categorySection" class="screen active">
-      <h2>カテゴリを選ぶ</h2>
-      <div id="categoryList" class="card-grid"></div>
+      <div class="section-title">
+        <h2>カテゴリ</h2>
+        <p>食べたつもりになりたいジャンルを選んでください</p>
+      </div>
+      <div id="categoryList" class="category-grid"></div>
     </section>
 
     <section id="storeSection" class="screen">
-      <button id="backToCategories" class="back-btn">← カテゴリに戻る</button>
-      <h2 id="storeTitle">店舗を選ぶ</h2>
-      <div id="storeList" class="card-grid"></div>
+      <button id="backToCategories" class="back-btn">← カテゴリ</button>
+      <div class="section-title">
+        <h2 id="storeTitle">お店を選ぶ</h2>
+        <p>近くにありそうなお店を選んでください</p>
+      </div>
+      <div id="storeList" class="store-list"></div>
     </section>
 
     <section id="itemSection" class="screen">
-      <button id="backToStores" class="back-btn">← 店舗に戻る</button>
-      <h2 id="itemTitle">商品を選ぶ</h2>
+      <button id="backToStores" class="back-btn">← お店</button>
+      <div class="section-title">
+        <h2 id="itemTitle">商品を選ぶ</h2>
+        <p>食べたいものを好きなだけ選んだつもりでOK</p>
+      </div>
       <div id="itemList" class="item-list"></div>
     </section>
 
     <section id="resultSection" class="screen">
       <div class="result-card">
+        <div class="delivery-icon">🛵</div>
         <p id="deliveryStatus" class="delivery-status">注文を受け付けたつもりです</p>
         <h2 id="resultTitle"></h2>
         <p id="resultText"></p>
@@ -51,6 +63,6 @@
     </section>
   </main>
 
-  <script src="script.js"></script>
+  <script src="script.js?v=2"></script>
 </body>
 </html>
