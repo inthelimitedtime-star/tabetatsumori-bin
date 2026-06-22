@@ -100,6 +100,7 @@ const CATEGORIES = [
   {
     category: "ラーメン",
     icon: "🍜",
+    image: "./ramen.PNG",
     stores: [
       {
         name: "麺処しろうず",
@@ -137,6 +138,7 @@ const CATEGORIES = [
   {
     category: "寿司",
     icon: "🍣",
+    image: "./sushi.PNG",
     stores: [
       {
         name: "すし湊まる",
@@ -174,6 +176,7 @@ const CATEGORIES = [
   {
     category: "カレー",
     icon: "🍛",
+    image: "./nancarry.PNG",
     stores: [
       {
         name: "カレー工房スパイス月",
@@ -204,36 +207,6 @@ const CATEGORIES = [
           ["三種あいがけカレー", 1380],
           ["チーズナン気分", 520]
         )
-      },
-      {
-        name: "和だし咖喱 あかり",
-        items: menu(
-          ["和風牛すじカレー", 1080],
-          ["だし香るカツカレー", 1260],
-          ["とろ玉カレー丼", 960],
-          ["甘辛そぼろカレー", 920],
-          ["きのこ和風カレー", 980]
-        )
-      },
-      {
-        name: "おうち咖喱日和",
-        items: menu(
-          ["昔ながらの家カレー", 880],
-          ["しょうが焼きカレー", 1120],
-          ["ハンバーグカレー", 1180],
-          ["コロッケカレー", 920],
-          ["やさしい甘口カレー", 850]
-        )
-      },
-      {
-        name: "カレー亭こむぎ",
-        items: menu(
-          ["給食風ポークカレー", 860],
-          ["和牛すじ煮込みカレー", 1280],
-          ["からあげカレー", 1080],
-          ["半熟卵のせカレー", 980],
-          ["福神漬け大盛り", 120]
-        )
       }
     ]
   },
@@ -241,6 +214,7 @@ const CATEGORIES = [
   {
     category: "ピザ",
     icon: "🍕",
+    image: "./pizza.PNG",
     stores: [
       {
         name: "ピッツァ空と窯",
@@ -278,6 +252,7 @@ const CATEGORIES = [
   {
     category: "中華料理",
     icon: "🥟",
+    image: "./china.PNG",
     stores: [
       {
         name: "中華食堂 龍々",
@@ -315,6 +290,7 @@ const CATEGORIES = [
   {
     category: "韓国料理",
     icon: "🌶️",
+    image: "./korea.PNG",
     stores: [
       {
         name: "ソウル屋台ハヌル",
@@ -352,6 +328,7 @@ const CATEGORIES = [
   {
     category: "和食",
     icon: "🍱",
+    image: "./wasyoku.PNG",
     stores: [
       {
         name: "ごはん処 いろは",
@@ -382,36 +359,6 @@ const CATEGORIES = [
           ["茶碗蒸し", 380],
           ["ごはん大盛り", 120]
         )
-      },
-      {
-        name: "できたて弁当ひなた",
-        items: menu(
-          ["のりから弁当", 780],
-          ["チキン南蛮弁当", 920],
-          ["しょうが焼き弁当", 880],
-          ["ハンバーグ弁当", 960],
-          ["幕の内弁当", 1080]
-        )
-      },
-      {
-        name: "おべんとうキッチン福まる",
-        items: menu(
-          ["唐揚げたっぷり弁当", 920],
-          ["牛焼肉弁当", 980],
-          ["さば味噌弁当", 860],
-          ["そぼろ二色弁当", 780],
-          ["ミックスフライ弁当", 960]
-        )
-      },
-      {
-        name: "弁当茶屋のんびり",
-        items: menu(
-          ["だし巻き弁当", 820],
-          ["照り焼きチキン弁当", 890],
-          ["豚キムチ弁当", 920],
-          ["鮭のり弁当", 860],
-          ["おかず盛り合わせ", 760]
-        )
       }
     ]
   },
@@ -419,6 +366,7 @@ const CATEGORIES = [
   {
     category: "焼肉",
     icon: "🥩",
+    image: "./yakiniku.PNG",
     stores: [
       {
         name: "焼肉どんどこ亭",
@@ -456,6 +404,7 @@ const CATEGORIES = [
   {
     category: "鶏料理",
     icon: "🍗",
+    image: "./karaage.PNG",
     stores: [
       {
         name: "鶏うま本舗",
@@ -493,6 +442,7 @@ const CATEGORIES = [
   {
     category: "パスタ",
     icon: "🍝",
+    image: "./pasta.PNG",
     stores: [
       {
         name: "パスタ食堂アルデンテ",
@@ -530,6 +480,7 @@ const CATEGORIES = [
   {
     category: "スイーツ",
     icon: "🍰",
+    image: "./sweets.PNG",
     stores: [
       {
         name: "甘味ラボしゅがー",
@@ -567,6 +518,7 @@ const CATEGORIES = [
   {
     category: "コーヒーとお茶",
     icon: "🍵",
+    image: "./tea&coffee.PNG",
     stores: [
       {
         name: "豆と茶ひとやすみ",
@@ -604,6 +556,7 @@ const CATEGORIES = [
   {
     category: "丼もの",
     icon: "🍚",
+    image: "./donmono.PNG",
     stores: [
       {
         name: "どんぶり食堂まんぷく",
@@ -641,6 +594,7 @@ const CATEGORIES = [
   {
     category: "アイスクリーム",
     icon: "🍦",
+    image: "./ice.PNG",
     stores: [
       {
         name: "アイス工房ミルキー",
@@ -678,6 +632,7 @@ const CATEGORIES = [
   {
     category: "海鮮料理",
     icon: "🦐",
+    image: "./kaisen.PNG",
     stores: [
       {
         name: "海鮮食堂なみの音",
@@ -715,6 +670,7 @@ const CATEGORIES = [
   {
     category: "スープ",
     icon: "🥣",
+    image: "./soup.PNG",
     stores: [
       {
         name: "スープ食堂ぽかぽか",
@@ -818,10 +774,6 @@ const resultAccount = document.getElementById("resultAccount");
 
 function safeText(element, text) {
   if (element) element.textContent = text;
-}
-
-function safeHtml(element, html) {
-  if (element) element.innerHTML = html;
 }
 
 function addSafeEvent(element, eventName, handler) {
@@ -1004,7 +956,6 @@ function addSavings(amount, kcal) {
 
 function addOrderHistory(order) {
   const history = getOrderHistory();
-
   history.unshift(order);
   saveOrderHistory(history);
 }
@@ -1872,7 +1823,6 @@ document.querySelectorAll(".nav-item").forEach((button) => {
 
     if (target === "search") {
       showScreen("search");
-
       setTimeout(() => {
         if (searchInput) searchInput.focus();
       }, 100);
