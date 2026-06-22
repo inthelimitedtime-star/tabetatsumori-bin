@@ -6,8 +6,8 @@
 
   <title>食べたつもり便</title>
 
-  <link rel="stylesheet" href="style.css?v=8" />
-  <script src="script.js?v=8" defer></script>
+  <link rel="stylesheet" href="style.css?v=9" />
+  <script src="script.js?v=9" defer></script>
 </head>
 
 <body>
@@ -27,7 +27,7 @@
     </section>
 
     <section id="storeScreen" class="screen">
-      <button id="backToCategories" class="back-btn">← メニュー</button>
+      <button id="backToCategories" class="back-btn" type="button">← メニュー</button>
 
       <div class="section-title">
         <h2 id="storeTitle">お店を選ぶ</h2>
@@ -38,7 +38,7 @@
     </section>
 
     <section id="itemScreen" class="screen">
-      <button id="backToStores" class="back-btn">← お店</button>
+      <button id="backToStores" class="back-btn" type="button">← お店</button>
 
       <div class="section-title">
         <h2 id="itemTitle">商品を選ぶ</h2>
@@ -79,21 +79,21 @@
           </div>
           <div>
             <span>配達料</span>
-            <strong>¥0 のつもり</strong>
+            <strong id="checkoutDelivery">¥0</strong>
           </div>
           <div>
-            <span>サービス料</span>
-            <strong>¥0 のつもり</strong>
+            <span>サービス料 7%</span>
+            <strong id="checkoutService">¥0</strong>
           </div>
           <div class="total-line">
-            <span>今回の節約</span>
+            <span>合計</span>
             <strong id="checkoutTotal">¥0</strong>
           </div>
         </div>
 
-        <button id="confirmOrder" class="main-btn">注文したつもりで受付する</button>
-        <button id="continueShopping" class="sub-btn">商品を追加する</button>
-        <button id="clearCart" class="text-btn">カートを空にする</button>
+        <button id="confirmOrder" class="main-btn" type="button">注文したつもりで受付する</button>
+        <button id="continueShopping" class="sub-btn" type="button">店舗に戻って注文を続ける</button>
+        <button id="clearCart" class="text-btn" type="button">カートを空にする</button>
       </div>
     </section>
 
@@ -115,8 +115,8 @@
         <h2 id="resultTitle">食べたつもり完了！</h2>
         <div id="resultText" class="result-text"></div>
 
-        <button id="resultHome" class="main-btn">ホームに戻る</button>
-        <button id="resultAccount" class="sub-btn">マイアカウントを見る</button>
+        <button id="resultHome" class="main-btn" type="button">ホームに戻る</button>
+        <button id="resultAccount" class="sub-btn" type="button">マイアカウントを見る</button>
       </div>
     </section>
 
@@ -157,7 +157,10 @@
       </div>
 
       <div class="account-section">
-        <h3>注文履歴</h3>
+        <div class="account-section-head">
+          <h3>注文履歴</h3>
+          <button id="resetAccountData" class="mini-danger-btn" type="button">リセット</button>
+        </div>
 
         <div class="saving-list">
           <div class="saving-row">
