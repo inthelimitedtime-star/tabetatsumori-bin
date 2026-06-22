@@ -166,3 +166,57 @@ dialog::backdrop { background: rgba(17,24,39,.42); backdrop-filter: blur(3px); }
   .quick-nav { grid-template-columns: repeat(2, 1fr); }
   .share-actions, .result-stats, .badge-grid, .usage-grid { grid-template-columns: 1fr; }
 }
+.summary-grid-two {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.menu-breadcrumb {
+  margin: 10px 0;
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: var(--soft);
+  color: var(--primary-dark);
+  font-weight: 800;
+  font-size: 13px;
+}
+
+.store-card,
+.category-card {
+  display: grid;
+  grid-template-columns: 54px 1fr auto;
+  gap: 12px;
+  align-items: center;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: rgba(255,255,255,.68);
+}
+
+.store-card .store-icon,
+.category-card .category-icon {
+  font-size: 32px;
+  width: 54px;
+  height: 54px;
+  display: grid;
+  place-items: center;
+  border-radius: 18px;
+  background: var(--soft);
+}
+
+.store-card strong,
+.category-card strong {
+  display: block;
+}
+
+.store-card small,
+.category-card small {
+  display: block;
+  color: var(--muted);
+  margin-top: 4px;
+  line-height: 1.5;
+}
+
+.next-mark {
+  font-weight: 900;
+  color: var(--primary-dark);
+}
