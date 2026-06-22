@@ -461,7 +461,7 @@ button {
 .price-summary .total-line span,
 .price-summary .total-line strong {
   color: #111827;
-  font-size: 18px;
+  font-size: 22px;
   font-weight: 900;
 }
 
@@ -601,6 +601,22 @@ button {
   font-weight: 900;
 }
 
+.result-fee-list {
+  margin: 14px 0 0;
+  padding: 14px 0;
+  border-top: 1px solid #f0e0cf;
+  border-bottom: 1px solid #f0e0cf;
+}
+
+.result-fee-list div {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 0;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 800;
+}
+
 .result-total {
   display: flex;
   justify-content: space-between;
@@ -668,12 +684,31 @@ button {
   margin-bottom: 16px;
 }
 
-.account-section h3 {
-  margin: 0 0 14px;
+.account-section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.account-section h3,
+.account-section-head h3 {
+  margin: 0;
   color: #111827;
   font-size: 20px;
   font-weight: 900;
   letter-spacing: -0.03em;
+}
+
+.mini-danger-btn {
+  flex: 0 0 auto;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: #fff1f2;
+  color: #e11d48;
+  font-size: 12px;
+  font-weight: 900;
 }
 
 .payment-grid {
