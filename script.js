@@ -1,3 +1,7 @@
+function menu(...items) {
+  return items.map(([name, price]) => ({ name, price }));
+}
+
 const CATEGORIES = [
   {
     category: "ファストフード",
@@ -5,33 +9,33 @@ const CATEGORIES = [
     stores: [
       {
         name: "パクっとキッチン",
-        items: [
-          { name: "ごちそうスマッシュバーガー", price: 980 },
-          { name: "サクサクチキンバスケット", price: 880 },
-          { name: "ほくほくポテトBOX", price: 520 },
-          { name: "てりやきミートサンド", price: 760 },
-          { name: "ナゲットパーティーセット", price: 690 }
-        ]
+        items: menu(
+          ["ごちそうスマッシュバーガー", 980],
+          ["サクサクチキンバスケット", 880],
+          ["ほくほくポテトBOX", 520],
+          ["てりやきミートサンド", 760],
+          ["ナゲットパーティーセット", 690]
+        )
       },
       {
         name: "スピードミール88",
-        items: [
-          { name: "ダブルミートサンド", price: 920 },
-          { name: "スパイシーチキンロール", price: 820 },
-          { name: "やみつきペッパーポテト", price: 560 },
-          { name: "チーズドッグプレート", price: 780 },
-          { name: "バニラシェイク気分", price: 480 }
-        ]
+        items: menu(
+          ["ダブルミートサンド", 920],
+          ["スパイシーチキンロール", 820],
+          ["やみつきペッパーポテト", 560],
+          ["チーズドッグプレート", 780],
+          ["バニラシェイク気分", 480]
+        )
       },
       {
         name: "モグモグステーション",
-        items: [
-          { name: "特盛ジャンクプレート", price: 1180 },
-          { name: "ガーリックチキンBOX", price: 890 },
-          { name: "チーズポテト山盛り", price: 650 },
-          { name: "ミートパイセット", price: 760 },
-          { name: "甘辛チキンナゲット", price: 680 }
-        ]
+        items: menu(
+          ["特盛ジャンクプレート", 1180],
+          ["ガーリックチキンBOX", 890],
+          ["チーズポテト山盛り", 650],
+          ["ミートパイセット", 760],
+          ["甘辛チキンナゲット", 680]
+        )
       }
     ]
   },
@@ -42,33 +46,33 @@ const CATEGORIES = [
     stores: [
       {
         name: "バーガースタンド橙",
-        items: [
-          { name: "橙クラシックバーガー", price: 1080 },
-          { name: "炙りチーズバーガー", price: 1180 },
-          { name: "アボカドベーコンバーガー", price: 1280 },
-          { name: "オニオンリングバスケット", price: 620 },
-          { name: "自家製レモンスカッシュ", price: 520 }
-        ]
+        items: menu(
+          ["橙クラシックバーガー", 1080],
+          ["炙りチーズバーガー", 1180],
+          ["アボカドベーコンバーガー", 1280],
+          ["オニオンリングバスケット", 620],
+          ["自家製レモンスカッシュ", 520]
+        )
       },
       {
         name: "ミートラボ横丁",
-        items: [
-          { name: "極厚パティバーガー", price: 1380 },
-          { name: "月見てりたまバーガー", price: 1160 },
-          { name: "黒こしょうチキンバーガー", price: 980 },
-          { name: "ガーリックポテト", price: 580 },
-          { name: "濃厚ミルクシェイク", price: 560 }
-        ]
+        items: menu(
+          ["極厚パティバーガー", 1380],
+          ["月見てりたまバーガー", 1160],
+          ["黒こしょうチキンバーガー", 980],
+          ["ガーリックポテト", 580],
+          ["濃厚ミルクシェイク", 560]
+        )
       },
       {
         name: "バンズ研究所",
-        items: [
-          { name: "ふわバンズチーズバーガー", price: 1080 },
-          { name: "はちみつベーコンバーガー", price: 1260 },
-          { name: "スモーキーBBQバーガー", price: 1320 },
-          { name: "チリチーズポテト", price: 690 },
-          { name: "コーラフロート", price: 540 }
-        ]
+        items: menu(
+          ["ふわバンズチーズバーガー", 1080],
+          ["はちみつベーコンバーガー", 1260],
+          ["スモーキーBBQバーガー", 1320],
+          ["チリチーズポテト", 690],
+          ["コーラフロート", 540]
+        )
       }
     ]
   },
@@ -79,33 +83,33 @@ const CATEGORIES = [
     stores: [
       {
         name: "麺処しろうず",
-        items: [
-          { name: "白だし豚骨らぁ麺", price: 980 },
-          { name: "辛赤味噌らぁ麺", price: 1060 },
-          { name: "炙りチャーシュー麺", price: 1280 },
-          { name: "ひとくち餃子", price: 480 },
-          { name: "焼豚めし", price: 520 }
-        ]
+        items: menu(
+          ["白だし豚骨らぁ麺", 980],
+          ["辛赤味噌らぁ麺", 1060],
+          ["炙りチャーシュー麺", 1280],
+          ["ひとくち餃子", 480],
+          ["焼豚めし", 520]
+        )
       },
       {
         name: "らぁ麺 風雲堂",
-        items: [
-          { name: "濃厚鶏白湯そば", price: 1080 },
-          { name: "魚介しょうゆらぁ麺", price: 960 },
-          { name: "背脂ねぎらぁ麺", price: 1050 },
-          { name: "半熟味玉トッピング", price: 180 },
-          { name: "特製炒飯", price: 620 }
-        ]
+        items: menu(
+          ["濃厚鶏白湯そば", 1080],
+          ["魚介しょうゆらぁ麺", 960],
+          ["背脂ねぎらぁ麺", 1050],
+          ["半熟味玉トッピング", 180],
+          ["特製炒飯", 620]
+        )
       },
       {
         name: "麺屋こがね",
-        items: [
-          { name: "黄金味噌ラーメン", price: 1020 },
-          { name: "焦がし醤油ラーメン", price: 980 },
-          { name: "肉盛りつけ麺", price: 1240 },
-          { name: "にんにく餃子", price: 460 },
-          { name: "ねぎ塩チャーシュー丼", price: 580 }
-        ]
+        items: menu(
+          ["黄金味噌ラーメン", 1020],
+          ["焦がし醤油ラーメン", 980],
+          ["肉盛りつけ麺", 1240],
+          ["にんにく餃子", 460],
+          ["ねぎ塩チャーシュー丼", 580]
+        )
       }
     ]
   },
@@ -116,33 +120,33 @@ const CATEGORIES = [
     stores: [
       {
         name: "すし湊まる",
-        items: [
-          { name: "まぐろ三昧セット", price: 1480 },
-          { name: "炙りサーモン握り", price: 1280 },
-          { name: "海鮮ちらし重", price: 1380 },
-          { name: "えび天巻き", price: 920 },
-          { name: "茶碗蒸し", price: 360 }
-        ]
+        items: menu(
+          ["まぐろ三昧セット", 1480],
+          ["炙りサーモン握り", 1280],
+          ["海鮮ちらし重", 1380],
+          ["えび天巻き", 920],
+          ["茶碗蒸し", 360]
+        )
       },
       {
         name: "鮨うたげ",
-        items: [
-          { name: "特上にぎり盛り", price: 1980 },
-          { name: "とろサーモンづくし", price: 1380 },
-          { name: "ねぎとろ巻き", price: 780 },
-          { name: "いくら小丼", price: 980 },
-          { name: "あおさ味噌汁", price: 260 }
-        ]
+        items: menu(
+          ["特上にぎり盛り", 1980],
+          ["とろサーモンづくし", 1380],
+          ["ねぎとろ巻き", 780],
+          ["いくら小丼", 980],
+          ["あおさ味噌汁", 260]
+        )
       },
       {
         name: "海町すし便",
-        items: [
-          { name: "海町にぎり10貫", price: 1580 },
-          { name: "まぐろ赤身セット", price: 1180 },
-          { name: "穴子一本握り", price: 980 },
-          { name: "サーモン親子ちらし", price: 1480 },
-          { name: "玉子焼き", price: 420 }
-        ]
+        items: menu(
+          ["海町にぎり10貫", 1580],
+          ["まぐろ赤身セット", 1180],
+          ["穴子一本握り", 980],
+          ["サーモン親子ちらし", 1480],
+          ["玉子焼き", 420]
+        )
       }
     ]
   },
@@ -153,33 +157,33 @@ const CATEGORIES = [
     stores: [
       {
         name: "カレー工房スパイス月",
-        items: [
-          { name: "王道ビーフカレー", price: 980 },
-          { name: "サクサクロースカツカレー", price: 1260 },
-          { name: "彩り野菜カレー", price: 1050 },
-          { name: "チーズまみれカレー", price: 1120 },
-          { name: "タンドリーチキンカレー", price: 1180 }
-        ]
+        items: menu(
+          ["王道ビーフカレー", 980],
+          ["サクサクロースカツカレー", 1260],
+          ["彩り野菜カレー", 1050],
+          ["チーズまみれカレー", 1120],
+          ["タンドリーチキンカレー", 1180]
+        )
       },
       {
         name: "ごろっと煮込みカレー屋",
-        items: [
-          { name: "とろ旨ポークカレー", price: 960 },
-          { name: "海老フライカレー", price: 1280 },
-          { name: "ほうれん草チキンカレー", price: 1080 },
-          { name: "温玉カレー", price: 920 },
-          { name: "旨辛キーマカレー", price: 1060 }
-        ]
+        items: menu(
+          ["とろ旨ポークカレー", 960],
+          ["海老フライカレー", 1280],
+          ["ほうれん草チキンカレー", 1080],
+          ["温玉カレー", 920],
+          ["旨辛キーマカレー", 1060]
+        )
       },
       {
         name: "スパイス食堂まる雲",
-        items: [
-          { name: "濃厚バターチキンカレー", price: 1150 },
-          { name: "黒ごまビーフカレー", price: 1180 },
-          { name: "なすとひき肉のカレー", price: 980 },
-          { name: "三種あいがけカレー", price: 1380 },
-          { name: "チーズナン気分", price: 520 }
-        ]
+        items: menu(
+          ["濃厚バターチキンカレー", 1150],
+          ["黒ごまビーフカレー", 1180],
+          ["なすとひき肉のカレー", 980],
+          ["三種あいがけカレー", 1380],
+          ["チーズナン気分", 520]
+        )
       }
     ]
   },
@@ -190,33 +194,33 @@ const CATEGORIES = [
     stores: [
       {
         name: "和だし咖喱 あかり",
-        items: [
-          { name: "和風牛すじカレー", price: 1080 },
-          { name: "だし香るカツカレー", price: 1260 },
-          { name: "とろ玉カレー丼", price: 960 },
-          { name: "甘辛そぼろカレー", price: 920 },
-          { name: "きのこ和風カレー", price: 980 }
-        ]
+        items: menu(
+          ["和風牛すじカレー", 1080],
+          ["だし香るカツカレー", 1260],
+          ["とろ玉カレー丼", 960],
+          ["甘辛そぼろカレー", 920],
+          ["きのこ和風カレー", 980]
+        )
       },
       {
         name: "おうち咖喱日和",
-        items: [
-          { name: "昔ながらの家カレー", price: 880 },
-          { name: "しょうが焼きカレー", price: 1120 },
-          { name: "ハンバーグカレー", price: 1180 },
-          { name: "コロッケカレー", price: 920 },
-          { name: "やさしい甘口カレー", price: 850 }
-        ]
+        items: menu(
+          ["昔ながらの家カレー", 880],
+          ["しょうが焼きカレー", 1120],
+          ["ハンバーグカレー", 1180],
+          ["コロッケカレー", 920],
+          ["やさしい甘口カレー", 850]
+        )
       },
       {
         name: "カレー亭こむぎ",
-        items: [
-          { name: "給食風ポークカレー", price: 860 },
-          { name: "和牛すじ煮込みカレー", price: 1280 },
-          { name: "からあげカレー", price: 1080 },
-          { name: "半熟卵のせカレー", price: 980 },
-          { name: "福神漬け大盛り", price: 120 }
-        ]
+        items: menu(
+          ["給食風ポークカレー", 860],
+          ["和牛すじ煮込みカレー", 1280],
+          ["からあげカレー", 1080],
+          ["半熟卵のせカレー", 980],
+          ["福神漬け大盛り", 120]
+        )
       }
     ]
   },
@@ -227,33 +231,33 @@ const CATEGORIES = [
     stores: [
       {
         name: "ピッツァ空と窯",
-        items: [
-          { name: "王道マルゲリータ", price: 1480 },
-          { name: "照り焼きチキンピザ", price: 1680 },
-          { name: "4種チーズの濃厚ピザ", price: 1780 },
-          { name: "海の幸トマトピザ", price: 1880 },
-          { name: "フライドポテト", price: 520 }
-        ]
+        items: menu(
+          ["王道マルゲリータ", 1480],
+          ["照り焼きチキンピザ", 1680],
+          ["4種チーズの濃厚ピザ", 1780],
+          ["海の幸トマトピザ", 1880],
+          ["フライドポテト", 520]
+        )
       },
       {
         name: "まるっとピザ研究所",
-        items: [
-          { name: "ペパロニスマイル", price: 1580 },
-          { name: "コーンマヨベーコン", price: 1480 },
-          { name: "たっぷりソーセージピザ", price: 1720 },
-          { name: "バジル香るピザ", price: 1660 },
-          { name: "ハニーチーズピザ", price: 1740 }
-        ]
+        items: menu(
+          ["ペパロニスマイル", 1580],
+          ["コーンマヨベーコン", 1480],
+          ["たっぷりソーセージピザ", 1720],
+          ["バジル香るピザ", 1660],
+          ["ハニーチーズピザ", 1740]
+        )
       },
       {
         name: "夜ふかしピザ便",
-        items: [
-          { name: "深夜のミートピザ", price: 1690 },
-          { name: "チリトマトピザ", price: 1580 },
-          { name: "もち明太ピザ", price: 1620 },
-          { name: "ポテマヨピザ", price: 1480 },
-          { name: "チキンナゲット", price: 640 }
-        ]
+        items: menu(
+          ["深夜のミートピザ", 1690],
+          ["チリトマトピザ", 1580],
+          ["もち明太ピザ", 1620],
+          ["ポテマヨピザ", 1480],
+          ["チキンナゲット", 640]
+        )
       }
     ]
   },
@@ -264,33 +268,33 @@ const CATEGORIES = [
     stores: [
       {
         name: "中華食堂 龍々",
-        items: [
-          { name: "肉汁焼き餃子", price: 520 },
-          { name: "黄金炒飯", price: 850 },
-          { name: "ふわとろ天津飯", price: 920 },
-          { name: "本格麻婆豆腐", price: 980 },
-          { name: "油淋鶏", price: 1050 }
-        ]
+        items: menu(
+          ["肉汁焼き餃子", 520],
+          ["黄金炒飯", 850],
+          ["ふわとろ天津飯", 920],
+          ["本格麻婆豆腐", 980],
+          ["油淋鶏", 1050]
+        )
       },
       {
         name: "上海ダイニング紅福",
-        items: [
-          { name: "海老炒飯", price: 980 },
-          { name: "黒酢酢豚", price: 1120 },
-          { name: "四川風麻婆丼", price: 960 },
-          { name: "小籠包", price: 680 },
-          { name: "鶏から香味ソース", price: 980 }
-        ]
+        items: menu(
+          ["海老炒飯", 980],
+          ["黒酢酢豚", 1120],
+          ["四川風麻婆丼", 960],
+          ["小籠包", 680],
+          ["鶏から香味ソース", 980]
+        )
       },
       {
         name: "町中華まんぷく楼",
-        items: [
-          { name: "にんにく餃子定食", price: 920 },
-          { name: "チャーシュー炒飯", price: 980 },
-          { name: "回鍋肉丼", price: 960 },
-          { name: "えびチリ", price: 1180 },
-          { name: "春巻きセット", price: 560 }
-        ]
+        items: menu(
+          ["にんにく餃子定食", 920],
+          ["チャーシュー炒飯", 980],
+          ["回鍋肉丼", 960],
+          ["えびチリ", 1180],
+          ["春巻きセット", 560]
+        )
       }
     ]
   },
@@ -301,33 +305,33 @@ const CATEGORIES = [
     stores: [
       {
         name: "ソウル屋台ハヌル",
-        items: [
-          { name: "ヤンニョムチキン", price: 1180 },
-          { name: "石焼きビビンバ", price: 1080 },
-          { name: "チーズトッポギ", price: 890 },
-          { name: "カルビキンパ", price: 860 },
-          { name: "スンドゥブ", price: 980 }
-        ]
+        items: menu(
+          ["ヤンニョムチキン", 1180],
+          ["石焼きビビンバ", 1080],
+          ["チーズトッポギ", 890],
+          ["カルビキンパ", 860],
+          ["スンドゥブ", 980]
+        )
       },
       {
         name: "韓ごはんモグモグ亭",
-        items: [
-          { name: "ハニーバターチキン", price: 1160 },
-          { name: "プルコギ丼", price: 1080 },
-          { name: "韓国風海苔巻き", price: 820 },
-          { name: "チーズボール", price: 620 },
-          { name: "キムチチャーハン", price: 920 }
-        ]
+        items: menu(
+          ["ハニーバターチキン", 1160],
+          ["プルコギ丼", 1080],
+          ["韓国風海苔巻き", 820],
+          ["チーズボール", 620],
+          ["キムチチャーハン", 920]
+        )
       },
       {
         name: "チキンとキンパの店",
-        items: [
-          { name: "甘辛チキンBOX", price: 1280 },
-          { name: "チーズキンパ", price: 920 },
-          { name: "旨辛ラッポッキ", price: 980 },
-          { name: "ナムルビビンバ", price: 960 },
-          { name: "韓国のりポテト", price: 540 }
-        ]
+        items: menu(
+          ["甘辛チキンBOX", 1280],
+          ["チーズキンパ", 920],
+          ["旨辛ラッポッキ", 980],
+          ["ナムルビビンバ", 960],
+          ["韓国のりポテト", 540]
+        )
       }
     ]
   },
@@ -338,33 +342,33 @@ const CATEGORIES = [
     stores: [
       {
         name: "ごはん処 いろは",
-        items: [
-          { name: "しょうが焼き定食", price: 1080 },
-          { name: "鯖の塩焼き定食", price: 1120 },
-          { name: "鶏の黒酢あん定食", price: 1180 },
-          { name: "だし巻き玉子", price: 480 },
-          { name: "豚汁", price: 360 }
-        ]
+        items: menu(
+          ["しょうが焼き定食", 1080],
+          ["鯖の塩焼き定食", 1120],
+          ["鶏の黒酢あん定食", 1180],
+          ["だし巻き玉子", 480],
+          ["豚汁", 360]
+        )
       },
       {
         name: "和み食堂こまち",
-        items: [
-          { name: "チキン南蛮定食", price: 1160 },
-          { name: "から揚げ定食", price: 1050 },
-          { name: "鮭の西京焼き定食", price: 1240 },
-          { name: "肉じゃが小鉢", price: 420 },
-          { name: "五目炊き込みご飯", price: 520 }
-        ]
+        items: menu(
+          ["チキン南蛮定食", 1160],
+          ["から揚げ定食", 1050],
+          ["鮭の西京焼き定食", 1240],
+          ["肉じゃが小鉢", 420],
+          ["五目炊き込みご飯", 520]
+        )
       },
       {
         name: "定食屋まる福",
-        items: [
-          { name: "とんかつ定食", price: 1180 },
-          { name: "味噌カツ定食", price: 1260 },
-          { name: "ぶり照り焼き定食", price: 1280 },
-          { name: "茶碗蒸し", price: 380 },
-          { name: "ごはん大盛り", price: 120 }
-        ]
+        items: menu(
+          ["とんかつ定食", 1180],
+          ["味噌カツ定食", 1260],
+          ["ぶり照り焼き定食", 1280],
+          ["茶碗蒸し", 380],
+          ["ごはん大盛り", 120]
+        )
       }
     ]
   },
@@ -375,33 +379,33 @@ const CATEGORIES = [
     stores: [
       {
         name: "できたて弁当ひなた",
-        items: [
-          { name: "のりから弁当", price: 780 },
-          { name: "チキン南蛮弁当", price: 920 },
-          { name: "しょうが焼き弁当", price: 880 },
-          { name: "ハンバーグ弁当", price: 960 },
-          { name: "幕の内弁当", price: 1080 }
-        ]
+        items: menu(
+          ["のりから弁当", 780],
+          ["チキン南蛮弁当", 920],
+          ["しょうが焼き弁当", 880],
+          ["ハンバーグ弁当", 960],
+          ["幕の内弁当", 1080]
+        )
       },
       {
         name: "おべんとうキッチン福まる",
-        items: [
-          { name: "唐揚げたっぷり弁当", price: 920 },
-          { name: "牛焼肉弁当", price: 980 },
-          { name: "さば味噌弁当", price: 860 },
-          { name: "そぼろ二色弁当", price: 780 },
-          { name: "ミックスフライ弁当", price: 960 }
-        ]
+        items: menu(
+          ["唐揚げたっぷり弁当", 920],
+          ["牛焼肉弁当", 980],
+          ["さば味噌弁当", 860],
+          ["そぼろ二色弁当", 780],
+          ["ミックスフライ弁当", 960]
+        )
       },
       {
         name: "弁当茶屋のんびり",
-        items: [
-          { name: "だし巻き弁当", price: 820 },
-          { name: "照り焼きチキン弁当", price: 890 },
-          { name: "豚キムチ弁当", price: 920 },
-          { name: "鮭のり弁当", price: 860 },
-          { name: "おかず盛り合わせ", price: 760 }
-        ]
+        items: menu(
+          ["だし巻き弁当", 820],
+          ["照り焼きチキン弁当", 890],
+          ["豚キムチ弁当", 920],
+          ["鮭のり弁当", 860],
+          ["おかず盛り合わせ", 760]
+        )
       }
     ]
   },
@@ -412,33 +416,33 @@ const CATEGORIES = [
     stores: [
       {
         name: "焼肉どんどこ亭",
-        items: [
-          { name: "カルビ焼肉弁当", price: 1280 },
-          { name: "ハラミ焼肉弁当", price: 1380 },
-          { name: "ねぎ塩牛タン弁当", price: 1580 },
-          { name: "焼肉ビビンバ", price: 1120 },
-          { name: "キムチ盛り", price: 420 }
-        ]
+        items: menu(
+          ["カルビ焼肉弁当", 1280],
+          ["ハラミ焼肉弁当", 1380],
+          ["ねぎ塩牛タン弁当", 1580],
+          ["焼肉ビビンバ", 1120],
+          ["キムチ盛り", 420]
+        )
       },
       {
         name: "炙り肉屋 火ノ丸",
-        items: [
-          { name: "特選ロース弁当", price: 1480 },
-          { name: "スタミナ焼肉丼", price: 1180 },
-          { name: "にんにくカルビ弁当", price: 1360 },
-          { name: "牛ホルモン焼き", price: 980 },
-          { name: "ナムル3種盛り", price: 480 }
-        ]
+        items: menu(
+          ["特選ロース弁当", 1480],
+          ["スタミナ焼肉丼", 1180],
+          ["にんにくカルビ弁当", 1360],
+          ["牛ホルモン焼き", 980],
+          ["ナムル3種盛り", 480]
+        )
       },
       {
         name: "肉めし山小屋",
-        items: [
-          { name: "牛カルビ重", price: 1180 },
-          { name: "豚トロ塩だれ丼", price: 980 },
-          { name: "焼肉ミックス弁当", price: 1480 },
-          { name: "チョレギサラダ", price: 580 },
-          { name: "温玉ビビンバ", price: 1080 }
-        ]
+        items: menu(
+          ["牛カルビ重", 1180],
+          ["豚トロ塩だれ丼", 980],
+          ["焼肉ミックス弁当", 1480],
+          ["チョレギサラダ", 580],
+          ["温玉ビビンバ", 1080]
+        )
       }
     ]
   },
@@ -449,33 +453,33 @@ const CATEGORIES = [
     stores: [
       {
         name: "炭火やきとり鳥あかり",
-        items: [
-          { name: "もも串", price: 220 },
-          { name: "ねぎま串", price: 240 },
-          { name: "つくね串", price: 260 },
-          { name: "かわ串", price: 220 },
-          { name: "焼き鳥丼", price: 920 }
-        ]
+        items: menu(
+          ["もも串", 220],
+          ["ねぎま串", 240],
+          ["つくね串", 260],
+          ["かわ串", 220],
+          ["焼き鳥丼", 920]
+        )
       },
       {
         name: "やきとり日和すずめ",
-        items: [
-          { name: "塩おまかせ5本盛り", price: 980 },
-          { name: "たれおまかせ5本盛り", price: 980 },
-          { name: "レバー串", price: 230 },
-          { name: "ぼんじり串", price: 260 },
-          { name: "チキン南蛮", price: 780 }
-        ]
+        items: menu(
+          ["塩おまかせ5本盛り", 980],
+          ["たれおまかせ5本盛り", 980],
+          ["レバー串", 230],
+          ["ぼんじり串", 260],
+          ["チキン南蛮", 780]
+        )
       },
       {
         name: "串焼き満月",
-        items: [
-          { name: "月見つくね串", price: 320 },
-          { name: "砂肝串", price: 220 },
-          { name: "せせり串", price: 280 },
-          { name: "焼き鳥重", price: 980 },
-          { name: "山盛りキャベツ", price: 360 }
-        ]
+        items: menu(
+          ["月見つくね串", 320],
+          ["砂肝串", 220],
+          ["せせり串", 280],
+          ["焼き鳥重", 980],
+          ["山盛りキャベツ", 360]
+        )
       }
     ]
   },
@@ -486,33 +490,33 @@ const CATEGORIES = [
     stores: [
       {
         name: "鶏うま本舗",
-        items: [
-          { name: "特製から揚げ弁当", price: 920 },
-          { name: "油淋鶏弁当", price: 980 },
-          { name: "チキン南蛮弁当", price: 1050 },
-          { name: "塩こうじから揚げ", price: 780 },
-          { name: "親子丼", price: 860 }
-        ]
+        items: menu(
+          ["特製から揚げ弁当", 920],
+          ["油淋鶏弁当", 980],
+          ["チキン南蛮弁当", 1050],
+          ["塩こうじから揚げ", 780],
+          ["親子丼", 860]
+        )
       },
       {
         name: "からあげ研究会",
-        items: [
-          { name: "醤油からあげBOX", price: 820 },
-          { name: "旨塩からあげBOX", price: 820 },
-          { name: "甘だれチキン弁当", price: 960 },
-          { name: "スパイシーチキン弁当", price: 980 },
-          { name: "山盛りポテト", price: 560 }
-        ]
+        items: menu(
+          ["醤油からあげBOX", 820],
+          ["旨塩からあげBOX", 820],
+          ["甘だれチキン弁当", 960],
+          ["スパイシーチキン弁当", 980],
+          ["山盛りポテト", 560]
+        )
       },
       {
         name: "チキン食堂こけこっこ",
-        items: [
-          { name: "グリルチキンプレート", price: 1080 },
-          { name: "照り焼きチキン丼", price: 920 },
-          { name: "鶏天弁当", price: 980 },
-          { name: "手羽からBOX", price: 880 },
-          { name: "鶏そぼろ丼", price: 780 }
-        ]
+        items: menu(
+          ["グリルチキンプレート", 1080],
+          ["照り焼きチキン丼", 920],
+          ["鶏天弁当", 980],
+          ["手羽からBOX", 880],
+          ["鶏そぼろ丼", 780]
+        )
       }
     ]
   },
@@ -523,33 +527,33 @@ const CATEGORIES = [
     stores: [
       {
         name: "パスタ食堂アルデンテ",
-        items: [
-          { name: "濃厚カルボナーラ", price: 1180 },
-          { name: "王道ミートソース", price: 1080 },
-          { name: "海老のトマトクリーム", price: 1280 },
-          { name: "きのこバターしょうゆ", price: 1060 },
-          { name: "ガーリックトースト", price: 420 }
-        ]
+        items: menu(
+          ["濃厚カルボナーラ", 1180],
+          ["王道ミートソース", 1080],
+          ["海老のトマトクリーム", 1280],
+          ["きのこバターしょうゆ", 1060],
+          ["ガーリックトースト", 420]
+        )
       },
       {
         name: "洋麺キッチンsora",
-        items: [
-          { name: "明太クリームパスタ", price: 1160 },
-          { name: "ペペロンチーノ", price: 980 },
-          { name: "ナポリタン", price: 1050 },
-          { name: "和風ツナおろしパスタ", price: 1080 },
-          { name: "ミニサラダ", price: 380 }
-        ]
+        items: menu(
+          ["明太クリームパスタ", 1160],
+          ["ペペロンチーノ", 980],
+          ["ナポリタン", 1050],
+          ["和風ツナおろしパスタ", 1080],
+          ["ミニサラダ", 380]
+        )
       },
       {
         name: "くるくるパスタ亭",
-        items: [
-          { name: "ベーコントマトパスタ", price: 1080 },
-          { name: "あさりバター醤油パスタ", price: 1180 },
-          { name: "チーズミートパスタ", price: 1200 },
-          { name: "ジェノベーゼ", price: 1150 },
-          { name: "スープセット", price: 420 }
-        ]
+        items: menu(
+          ["ベーコントマトパスタ", 1080],
+          ["あさりバター醤油パスタ", 1180],
+          ["チーズミートパスタ", 1200],
+          ["ジェノベーゼ", 1150],
+          ["スープセット", 420]
+        )
       }
     ]
   },
@@ -560,33 +564,33 @@ const CATEGORIES = [
     stores: [
       {
         name: "カフェ日だまり",
-        items: [
-          { name: "カフェラテ", price: 560 },
-          { name: "ハニートースト", price: 780 },
-          { name: "たまごサンド", price: 720 },
-          { name: "キャラメルミルク", price: 620 },
-          { name: "ベイクドチーズケーキ", price: 580 }
-        ]
+        items: menu(
+          ["カフェラテ", 560],
+          ["ハニートースト", 780],
+          ["たまごサンド", 720],
+          ["キャラメルミルク", 620],
+          ["ベイクドチーズケーキ", 580]
+        )
       },
       {
         name: "珈琲と風の店",
-        items: [
-          { name: "深煎りブレンド", price: 520 },
-          { name: "アイスカフェオレ", price: 560 },
-          { name: "厚切りバタートースト", price: 680 },
-          { name: "ナポリタン", price: 980 },
-          { name: "クラシックプリン", price: 520 }
-        ]
+        items: menu(
+          ["深煎りブレンド", 520],
+          ["アイスカフェオレ", 560],
+          ["厚切りバタートースト", 680],
+          ["ナポリタン", 980],
+          ["クラシックプリン", 520]
+        )
       },
       {
         name: "午後のテーブル",
-        items: [
-          { name: "ミックスサンド", price: 760 },
-          { name: "チキンと野菜のラップ", price: 820 },
-          { name: "抹茶ミルクラテ", price: 620 },
-          { name: "チョコブラウニー", price: 540 },
-          { name: "アイスティー", price: 480 }
-        ]
+        items: menu(
+          ["ミックスサンド", 760],
+          ["チキンと野菜のラップ", 820],
+          ["抹茶ミルクラテ", 620],
+          ["チョコブラウニー", 540],
+          ["アイスティー", 480]
+        )
       }
     ]
   },
@@ -597,33 +601,33 @@ const CATEGORIES = [
     stores: [
       {
         name: "甘味ラボしゅがー",
-        items: [
-          { name: "もちもちリングドーナツ", price: 360 },
-          { name: "生クリームシュー", price: 420 },
-          { name: "ふわふわロールケーキ", price: 580 },
-          { name: "濃厚チョコタルト", price: 620 },
-          { name: "ミルクプリン", price: 420 }
-        ]
+        items: menu(
+          ["もちもちリングドーナツ", 360],
+          ["生クリームシュー", 420],
+          ["ふわふわロールケーキ", 580],
+          ["濃厚チョコタルト", 620],
+          ["ミルクプリン", 420]
+        )
       },
       {
         name: "おやつの森",
-        items: [
-          { name: "いちごショート", price: 620 },
-          { name: "ダブルチーズケーキ", price: 680 },
-          { name: "カスタードエクレア", price: 460 },
-          { name: "しっとりフィナンシェ", price: 320 },
-          { name: "バニラソフト", price: 480 }
-        ]
+        items: menu(
+          ["いちごショート", 620],
+          ["ダブルチーズケーキ", 680],
+          ["カスタードエクレア", 460],
+          ["しっとりフィナンシェ", 320],
+          ["バニラソフト", 480]
+        )
       },
       {
         name: "砂糖日和",
-        items: [
-          { name: "ふわとろパンケーキ", price: 980 },
-          { name: "チョコバナナクレープ", price: 720 },
-          { name: "いちごミルクパフェ", price: 860 },
-          { name: "焼きたてワッフル", price: 760 },
-          { name: "なめらか杏仁", price: 420 }
-        ]
+        items: menu(
+          ["ふわとろパンケーキ", 980],
+          ["チョコバナナクレープ", 720],
+          ["いちごミルクパフェ", 860],
+          ["焼きたてワッフル", 760],
+          ["なめらか杏仁", 420]
+        )
       }
     ]
   },
@@ -634,33 +638,33 @@ const CATEGORIES = [
     stores: [
       {
         name: "デザート工房ミルミル",
-        items: [
-          { name: "とろけるプリン", price: 460 },
-          { name: "ごほうびクレープ", price: 760 },
-          { name: "チョコバナナパフェ", price: 880 },
-          { name: "いちごワッフル", price: 820 },
-          { name: "マンゴー杏仁", price: 520 }
-        ]
+        items: menu(
+          ["とろけるプリン", 460],
+          ["ごほうびクレープ", 760],
+          ["チョコバナナパフェ", 880],
+          ["いちごワッフル", 820],
+          ["マンゴー杏仁", 520]
+        )
       },
       {
         name: "しあわせ甘味店",
-        items: [
-          { name: "黒みつきなこパンケーキ", price: 920 },
-          { name: "抹茶あんみつ", price: 780 },
-          { name: "白玉ぜんざい", price: 680 },
-          { name: "いちごミルクかき氷", price: 760 },
-          { name: "キャラメルワッフル", price: 790 }
-        ]
+        items: menu(
+          ["黒みつきなこパンケーキ", 920],
+          ["抹茶あんみつ", 780],
+          ["白玉ぜんざい", 680],
+          ["いちごミルクかき氷", 760],
+          ["キャラメルワッフル", 790]
+        )
       },
       {
         name: "夜のデザート便",
-        items: [
-          { name: "深夜のチョコパフェ", price: 920 },
-          { name: "ほろ苦コーヒーゼリー", price: 560 },
-          { name: "ミルクレープ", price: 680 },
-          { name: "ベリータルト", price: 720 },
-          { name: "アイス盛り合わせ", price: 640 }
-        ]
+        items: menu(
+          ["深夜のチョコパフェ", 920],
+          ["ほろ苦コーヒーゼリー", 560],
+          ["ミルクレープ", 680],
+          ["ベリータルト", 720],
+          ["アイス盛り合わせ", 640]
+        )
       }
     ]
   },
@@ -671,70 +675,70 @@ const CATEGORIES = [
     stores: [
       {
         name: "豆と茶ひとやすみ",
-        items: [
-          { name: "本日のコーヒー", price: 480 },
-          { name: "抹茶ラテ", price: 620 },
-          { name: "ほうじ茶ラテ", price: 620 },
-          { name: "アイスティー", price: 460 },
-          { name: "あんバタースコーン", price: 520 }
-        ]
+        items: menu(
+          ["本日のコーヒー", 480],
+          ["抹茶ラテ", 620],
+          ["ほうじ茶ラテ", 620],
+          ["アイスティー", 460],
+          ["あんバタースコーン", 520]
+        )
       },
       {
         name: "茶房ブレンド",
-        items: [
-          { name: "深煎りアイスコーヒー", price: 520 },
-          { name: "ロイヤルミルクティー", price: 580 },
-          { name: "黒糖きなこラテ", price: 640 },
-          { name: "たまごサンド", price: 720 },
-          { name: "自家製ガトーショコラ", price: 560 }
-        ]
+        items: menu(
+          ["深煎りアイスコーヒー", 520],
+          ["ロイヤルミルクティー", 580],
+          ["黒糖きなこラテ", 640],
+          ["たまごサンド", 720],
+          ["自家製ガトーショコラ", 560]
+        )
       },
       {
         name: "珈琲小屋まめ助",
-        items: [
-          { name: "まめ助ブレンド", price: 500 },
-          { name: "カフェモカ", price: 620 },
-          { name: "ゆず茶", price: 560 },
-          { name: "抹茶フィナンシェ", price: 360 },
-          { name: "ホットサンド", price: 780 }
-        ]
+        items: menu(
+          ["まめ助ブレンド", 500],
+          ["カフェモカ", 620],
+          ["ゆず茶", 560],
+          ["抹茶フィナンシェ", 360],
+          ["ホットサンド", 780]
+        )
       }
     ]
   },
 
   {
-    category: "コンビニ",
-    icon: "🏪",
+    category: "丼もの",
+    icon: "🍚",
     stores: [
       {
-        name: "ローソン",
-        items: [
-          { name: "からあげクン", price: 280 },
-          { name: "おにぎり", price: 180 },
-          { name: "サンドイッチ", price: 360 },
-          { name: "弁当", price: 620 },
-          { name: "スイーツ", price: 320 }
-        ]
+        name: "どんぶり食堂まんぷく",
+        items: menu(
+          ["特盛牛カルビ丼", 980],
+          ["温玉豚しょうが丼", 880],
+          ["ねぎ塩チキン丼", 860],
+          ["とろ玉そぼろ丼", 780],
+          ["からあげマヨ丼", 920]
+        )
       },
       {
-        name: "ファミリーマート",
-        items: [
-          { name: "ファミチキ", price: 240 },
-          { name: "おにぎり", price: 180 },
-          { name: "パスタ", price: 560 },
-          { name: "弁当", price: 620 },
-          { name: "スイーツ", price: 330 }
-        ]
+        name: "丼丸キッチン",
+        items: menu(
+          ["炙りチャーシュー丼", 960],
+          ["海老天たまご丼", 1080],
+          ["ピリ辛スタミナ丼", 980],
+          ["鶏そぼろ三色丼", 840],
+          ["大盛りごはんのつもり", 150]
+        )
       },
       {
-        name: "セブン-イレブン",
-        items: [
-          { name: "おにぎり", price: 180 },
-          { name: "弁当", price: 650 },
-          { name: "サンドイッチ", price: 380 },
-          { name: "カップ麺", price: 260 },
-          { name: "スイーツ", price: 340 }
-        ]
+        name: "米と肉の店こめ太郎",
+        items: menu(
+          ["ローストビーフ丼", 1280],
+          ["味噌カツ丼", 1120],
+          ["チーズハンバーグ丼", 1180],
+          ["焼き鳥親子丼", 980],
+          ["明太マヨ鶏丼", 920]
+        )
       }
     ]
   }
@@ -759,6 +763,7 @@ const categoryList = document.getElementById("categoryList");
 const storeList = document.getElementById("storeList");
 const itemList = document.getElementById("itemList");
 const searchInput = document.getElementById("searchInput");
+const clearSearch = document.getElementById("clearSearch");
 const searchResults = document.getElementById("searchResults");
 const checkoutList = document.getElementById("checkoutList");
 
@@ -773,8 +778,15 @@ const acceptStatus = document.getElementById("acceptStatus");
 const resultTitle = document.getElementById("resultTitle");
 const resultText = document.getElementById("resultText");
 
+const accountNameDisplay = document.getElementById("accountNameDisplay");
+const accountNameInput = document.getElementById("accountNameInput");
+const saveAccountName = document.getElementById("saveAccountName");
 const accountTodaySaved = document.getElementById("accountTodaySaved");
+const accountMonthSaved = document.getElementById("accountMonthSaved");
 const accountTotalSaved = document.getElementById("accountTotalSaved");
+const orderHistoryList = document.getElementById("orderHistoryList");
+const monthlyChart = document.getElementById("monthlyChart");
+const totalChart = document.getElementById("totalChart");
 
 const backToCategories = document.getElementById("backToCategories");
 const backToStores = document.getElementById("backToStores");
@@ -787,6 +799,15 @@ const resultAccount = document.getElementById("resultAccount");
 function getTodayString() {
   const d = new Date();
   return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
+}
+
+function getMonthKey(date = new Date()) {
+  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
+}
+
+function getMonthLabel(monthKey) {
+  const [, month] = monthKey.split("-");
+  return `${Number(month)}月`;
 }
 
 function formatYen(num) {
@@ -806,6 +827,30 @@ function saveCart() {
   updateCartCount();
 }
 
+function getMonthlySavings() {
+  try {
+    return JSON.parse(localStorage.getItem("monthlySavings") || "{}");
+  } catch {
+    return {};
+  }
+}
+
+function saveMonthlySavings(data) {
+  localStorage.setItem("monthlySavings", JSON.stringify(data));
+}
+
+function getOrderHistory() {
+  try {
+    return JSON.parse(localStorage.getItem("orderHistory") || "[]");
+  } catch {
+    return [];
+  }
+}
+
+function saveOrderHistory(history) {
+  localStorage.setItem("orderHistory", JSON.stringify(history.slice(0, 30)));
+}
+
 function loadSavings() {
   const today = getTodayString();
   const savedDate = localStorage.getItem("savedDate");
@@ -821,19 +866,149 @@ function loadSavings() {
 function addSavings(amount) {
   const todaySaved = Number(localStorage.getItem("todaySaved") || 0) + amount;
   const totalSaved = Number(localStorage.getItem("totalSaved") || 0) + amount;
+  const monthKey = getMonthKey();
+  const monthlySavings = getMonthlySavings();
+
+  monthlySavings[monthKey] = Number(monthlySavings[monthKey] || 0) + amount;
 
   localStorage.setItem("todaySaved", String(todaySaved));
   localStorage.setItem("totalSaved", String(totalSaved));
+  saveMonthlySavings(monthlySavings);
 
   renderAccount();
+}
+
+function addOrderHistory(order) {
+  const history = getOrderHistory();
+
+  history.unshift(order);
+  saveOrderHistory(history);
+}
+
+function renderAccountName() {
+  const name = localStorage.getItem("accountName") || "ゲストさん";
+
+  accountNameDisplay.textContent = name;
+  accountNameInput.value = name;
 }
 
 function renderAccount() {
   const todaySaved = Number(localStorage.getItem("todaySaved") || 0);
   const totalSaved = Number(localStorage.getItem("totalSaved") || 0);
+  const monthKey = getMonthKey();
+  const monthlySavings = getMonthlySavings();
+  const monthSaved = Number(monthlySavings[monthKey] || 0);
 
   accountTodaySaved.textContent = formatYen(todaySaved);
+  accountMonthSaved.textContent = formatYen(monthSaved);
   accountTotalSaved.textContent = formatYen(totalSaved);
+
+  renderAccountName();
+  renderOrderHistory();
+  renderCharts();
+}
+
+function renderOrderHistory() {
+  const history = getOrderHistory();
+
+  orderHistoryList.innerHTML = "";
+
+  if (history.length === 0) {
+    orderHistoryList.innerHTML = `
+      <div class="empty-state">
+        <strong>注文履歴はまだありません</strong>
+        <p>食べたつもり注文をすると、ここに記録されます。</p>
+      </div>
+    `;
+    return;
+  }
+
+  history.slice(0, 5).forEach((order) => {
+    const item = document.createElement("div");
+    item.className = "history-item";
+
+    item.innerHTML = `
+      <div>
+        <strong>${order.items.length}品を食べたつもり</strong>
+        <span>${order.dateText}</span>
+      </div>
+      <em>${formatYen(order.total)}</em>
+    `;
+
+    orderHistoryList.appendChild(item);
+  });
+}
+
+function getLastSixMonths() {
+  const months = [];
+  const now = new Date();
+
+  for (let i = 5; i >= 0; i--) {
+    const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+    months.push(getMonthKey(d));
+  }
+
+  return months;
+}
+
+function renderCharts() {
+  const monthlySavings = getMonthlySavings();
+  const months = getLastSixMonths();
+
+  const monthlyData = months.map((month) => ({
+    key: month,
+    label: getMonthLabel(month),
+    value: Number(monthlySavings[month] || 0)
+  }));
+
+  const maxMonthValue = Math.max(...monthlyData.map((item) => item.value), 1);
+
+  monthlyChart.innerHTML = "";
+
+  monthlyData.forEach((item) => {
+    const percent = item.value === 0 ? 3 : Math.max(8, Math.round((item.value / maxMonthValue) * 100));
+    const col = document.createElement("div");
+    col.className = "chart-col";
+
+    col.innerHTML = `
+      <div class="chart-value">${item.value > 0 ? formatYen(item.value) : "¥0"}</div>
+      <div class="chart-bar-wrap">
+        <div class="chart-bar" style="height:${percent}%"></div>
+      </div>
+      <div class="chart-label">${item.label}</div>
+    `;
+
+    monthlyChart.appendChild(col);
+  });
+
+  let runningTotal = 0;
+  const totalData = monthlyData.map((item) => {
+    runningTotal += item.value;
+    return {
+      label: item.label,
+      value: runningTotal
+    };
+  });
+
+  const maxTotalValue = Math.max(...totalData.map((item) => item.value), 1);
+
+  totalChart.innerHTML = "";
+
+  totalData.forEach((item) => {
+    const percent = item.value === 0 ? 3 : Math.max(8, Math.round((item.value / maxTotalValue) * 100));
+    const row = document.createElement("div");
+    row.className = "line-row";
+
+    row.innerHTML = `
+      <div class="line-row-label">${item.label}</div>
+      <div class="line-track">
+        <div class="line-fill" style="width:${percent}%"></div>
+      </div>
+      <div class="line-value">${formatYen(item.value)}</div>
+    `;
+
+    totalChart.appendChild(row);
+  });
 }
 
 function getCartTotal() {
@@ -1013,7 +1188,7 @@ function renderCart() {
       </div>
       <div class="checkout-price">
         <strong>${formatYen(item.price)}</strong>
-        <button class="remove-item" data-id="${item.id}">削除</button>
+        <button class="remove-item" data-id="${item.id}" type="button">削除</button>
       </div>
     `;
 
@@ -1029,9 +1204,18 @@ function renderCart() {
   updateCartCount();
 }
 
+function updateClearSearchButton() {
+  if (searchInput.value.trim()) {
+    clearSearch.classList.remove("hidden");
+  } else {
+    clearSearch.classList.add("hidden");
+  }
+}
+
 function renderSearch(query) {
   const q = query.trim().toLowerCase();
   searchResults.innerHTML = "";
+  updateClearSearchButton();
 
   if (!q) {
     searchResults.innerHTML = `
@@ -1137,11 +1321,21 @@ function startAccepting() {
   clearAcceptTimers();
 
   latestOrder = {
+    id: `${Date.now()}-${Math.random()}`,
+    date: new Date().toISOString(),
+    dateText: new Date().toLocaleString("ja-JP", {
+      month: "numeric",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit"
+    }),
+    month: getMonthKey(),
     items: [...cart],
     total: getCartTotal()
   };
 
   addSavings(latestOrder.total);
+  addOrderHistory(latestOrder);
 
   cart = [];
   saveCart();
@@ -1277,6 +1471,12 @@ searchInput.addEventListener("input", () => {
   renderSearch(searchInput.value);
 });
 
+clearSearch.addEventListener("click", () => {
+  searchInput.value = "";
+  renderSearch("");
+  searchInput.focus();
+});
+
 searchResults.addEventListener("click", (event) => {
   const card = event.target.closest(".search-result");
   if (!card) return;
@@ -1359,9 +1559,24 @@ resultAccount.addEventListener("click", () => {
   showScreen("account");
 });
 
+saveAccountName.addEventListener("click", () => {
+  const name = accountNameInput.value.trim() || "ゲストさん";
+
+  localStorage.setItem("accountName", name);
+  renderAccountName();
+  showToast("アカウント名を変更しました");
+});
+
+accountNameInput.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") {
+    saveAccountName.click();
+  }
+});
+
 loadCart();
 loadSavings();
 renderCategories();
 renderSearch("");
 renderCart();
+renderAccountName();
 showScreen("home");
