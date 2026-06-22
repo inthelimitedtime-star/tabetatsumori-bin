@@ -742,29 +742,47 @@ const CATEGORIES = [
 
 let selectedCategoryIndex = null;
 let selectedStoreIndex = null;
+let cart = [];
+let latestOrder = null;
+let acceptTimers = [];
 
-const todaySavedEl = document.getElementById("todaySaved");
-const totalSavedEl = document.getElementById("totalSaved");
-
-const categorySection = document.getElementById("categorySection");
-const storeSection = document.getElementById("storeSection");
-const itemSection = document.getElementById("itemSection");
-const resultSection = document.getElementById("resultSection");
+const homeScreen = document.getElementById("homeScreen");
+const storeScreen = document.getElementById("storeScreen");
+const itemScreen = document.getElementById("itemScreen");
+const searchScreen = document.getElementById("searchScreen");
+const cartScreen = document.getElementById("cartScreen");
+const acceptingScreen = document.getElementById("acceptingScreen");
+const resultScreen = document.getElementById("resultScreen");
+const accountScreen = document.getElementById("accountScreen");
 
 const categoryList = document.getElementById("categoryList");
 const storeList = document.getElementById("storeList");
 const itemList = document.getElementById("itemList");
+const searchInput = document.getElementById("searchInput");
+const searchResults = document.getElementById("searchResults");
+const checkoutList = document.getElementById("checkoutList");
 
 const storeTitle = document.getElementById("storeTitle");
 const itemTitle = document.getElementById("itemTitle");
 
-const deliveryStatus = document.getElementById("deliveryStatus");
+const checkoutSubtotal = document.getElementById("checkoutSubtotal");
+const checkoutTotal = document.getElementById("checkoutTotal");
+const cartCount = document.getElementById("cartCount");
+
+const acceptStatus = document.getElementById("acceptStatus");
 const resultTitle = document.getElementById("resultTitle");
 const resultText = document.getElementById("resultText");
 
+const accountTodaySaved = document.getElementById("accountTodaySaved");
+const accountTotalSaved = document.getElementById("accountTotalSaved");
+
 const backToCategories = document.getElementById("backToCategories");
 const backToStores = document.getElementById("backToStores");
-const orderAgain = document.getElementById("orderAgain");
+const confirmOrder = document.getElementById("confirmOrder");
+const continueShopping = document.getElementById("continueShopping");
+const clearCart = document.getElementById("clearCart");
+const resultHome = document.getElementById("resultHome");
+const resultAccount = document.getElementById("resultAccount");
 
 function getTodayString() {
   const d = new Date();
@@ -773,6 +791,19 @@ function getTodayString() {
 
 function formatYen(num) {
   return `¥${Number(num).toLocaleString()}`;
+}
+
+function loadCart() {
+  try {
+    cart = JSON.parse(localStorage.getItem("tsumoriCart") || "[]");
+  } catch {
+    cart = [];
+  }
+}
+
+function saveCart() {
+  localStorage.setItem("tsumoriCart", JSON.stringify(cart));
+  updateCartCount();
 }
 
 function loadSavings() {
@@ -784,11 +815,7 @@ function loadSavings() {
     localStorage.setItem("todaySaved", "0");
   }
 
-  const todaySaved = Number(localStorage.getItem("todaySaved") || 0);
-  const totalSaved = Number(localStorage.getItem("totalSaved") || 0);
-
-  todaySavedEl.textContent = formatYen(todaySaved);
-  totalSavedEl.textContent = formatYen(totalSaved);
+  renderAccount();
 }
 
 function addSavings(amount) {
@@ -798,30 +825,70 @@ function addSavings(amount) {
   localStorage.setItem("todaySaved", String(todaySaved));
   localStorage.setItem("totalSaved", String(totalSaved));
 
-  loadSavings();
+  renderAccount();
+}
+
+function renderAccount() {
+  const todaySaved = Number(localStorage.getItem("todaySaved") || 0);
+  const totalSaved = Number(localStorage.getItem("totalSaved") || 0);
+
+  accountTodaySaved.textContent = formatYen(todaySaved);
+  accountTotalSaved.textContent = formatYen(totalSaved);
+}
+
+function getCartTotal() {
+  return cart.reduce((sum, item) => sum + item.price, 0);
+}
+
+function updateCartCount() {
+  const count = cart.length;
+
+  cartCount.textContent = count;
+
+  if (count === 0) {
+    cartCount.classList.add("hidden");
+  } else {
+    cartCount.classList.remove("hidden");
+  }
+}
+
+function clearAcceptTimers() {
+  acceptTimers.forEach((timer) => clearTimeout(timer));
+  acceptTimers = [];
+}
+
+function setActiveNav(name) {
+  document.querySelectorAll(".nav-item").forEach((button) => {
+    button.classList.remove("active");
+  });
+
+  const targetName = ["store", "item", "result", "accepting"].includes(name) ? "home" : name;
+  const navButton = document.querySelector(`.nav-item[data-target="${targetName}"]`);
+
+  if (navButton) {
+    navButton.classList.add("active");
+  }
 }
 
 function showScreen(name) {
-  categorySection.classList.remove("active");
-  storeSection.classList.remove("active");
-  itemSection.classList.remove("active");
-  resultSection.classList.remove("active");
+  document.querySelectorAll(".screen").forEach((screen) => {
+    screen.classList.remove("active");
+  });
 
-  if (name === "category") {
-    categorySection.classList.add("active");
-  }
+  if (name === "home") homeScreen.classList.add("active");
+  if (name === "store") storeScreen.classList.add("active");
+  if (name === "item") itemScreen.classList.add("active");
+  if (name === "search") searchScreen.classList.add("active");
+  if (name === "cart") cartScreen.classList.add("active");
+  if (name === "accepting") acceptingScreen.classList.add("active");
+  if (name === "result") resultScreen.classList.add("active");
+  if (name === "account") accountScreen.classList.add("active");
 
-  if (name === "store") {
-    storeSection.classList.add("active");
-  }
+  setActiveNav(name);
 
-  if (name === "item") {
-    itemSection.classList.add("active");
-  }
-
-  if (name === "result") {
-    resultSection.classList.add("active");
-  }
+  if (name === "cart") renderCart();
+  if (name === "account") renderAccount();
+  if (name === "search") renderSearch(searchInput.value);
 
   window.scrollTo({
     top: 0,
@@ -838,9 +905,12 @@ function renderCategories() {
     button.className = "category-card";
     button.dataset.index = index;
 
+    const itemCount = category.stores.reduce((sum, store) => sum + store.items.length, 0);
+
     button.innerHTML = `
       <span class="category-icon">${category.icon}</span>
       <span class="category-name">${category.category}</span>
+      <span class="category-count">${category.stores.length}店舗・${itemCount}商品</span>
     `;
 
     categoryList.appendChild(button);
@@ -860,8 +930,13 @@ function renderStores() {
     button.dataset.index = index;
 
     button.innerHTML = `
-      <strong>${store.name}</strong>
-      <span>${store.items.length}件の商品・配達料 ¥0 のつもり</span>
+      <div class="store-card-top">
+        <div>
+          <strong>${store.name}</strong>
+          <span>${store.items.length}件の商品・配達料 ¥0 のつもり</span>
+        </div>
+        <div class="store-badge">15-25分</div>
+      </div>
     `;
 
     storeList.appendChild(button);
@@ -882,42 +957,282 @@ function renderItems() {
     button.dataset.index = index;
 
     button.innerHTML = `
-      <span>${item.name}</span>
-      <strong>${formatYen(item.price)}</strong>
+      <div class="item-left">
+        <div class="item-thumb">${category.icon}</div>
+        <div>
+          <span class="item-name">${item.name}</span>
+          <span class="item-store">タップでカートに追加</span>
+        </div>
+      </div>
+      <strong class="item-price">${formatYen(item.price)}</strong>
     `;
 
     itemList.appendChild(button);
   });
 }
 
-function orderItem(item) {
-  const category = CATEGORIES[selectedCategoryIndex];
-  const store = category.stores[selectedStoreIndex];
+function addToCart(categoryIndex, storeIndex, itemIndex) {
+  const category = CATEGORIES[categoryIndex];
+  const store = category.stores[storeIndex];
+  const item = store.items[itemIndex];
 
-  addSavings(item.price);
+  cart.push({
+    id: `${Date.now()}-${Math.random()}`,
+    category: category.category,
+    icon: category.icon,
+    store: store.name,
+    name: item.name,
+    price: item.price
+  });
 
-  showScreen("result");
+  saveCart();
+  showToast(`${item.name}をカートに追加しました`);
+  showScreen("cart");
+}
 
-  deliveryStatus.textContent = "注文を受け付けたつもりです";
-  resultTitle.textContent = `${item.name}を食べたつもり！`;
+function renderCart() {
+  checkoutList.innerHTML = "";
+
+  if (cart.length === 0) {
+    checkoutList.innerHTML = `
+      <div class="empty-state">
+        <strong>カートは空です</strong>
+        <p>商品をタップすると、ここに追加されます。</p>
+      </div>
+    `;
+  }
+
+  cart.forEach((item) => {
+    const row = document.createElement("div");
+    row.className = "checkout-item";
+
+    row.innerHTML = `
+      <div>
+        <strong>${item.name}</strong>
+        <span>${item.store}・${item.category}</span>
+      </div>
+      <div class="checkout-price">
+        <strong>${formatYen(item.price)}</strong>
+        <button class="remove-item" data-id="${item.id}">削除</button>
+      </div>
+    `;
+
+    checkoutList.appendChild(row);
+  });
+
+  const total = getCartTotal();
+
+  checkoutSubtotal.textContent = formatYen(total);
+  checkoutTotal.textContent = formatYen(total);
+  confirmOrder.disabled = cart.length === 0;
+
+  updateCartCount();
+}
+
+function renderSearch(query) {
+  const q = query.trim().toLowerCase();
+  searchResults.innerHTML = "";
+
+  if (!q) {
+    searchResults.innerHTML = `
+      <div class="empty-state">
+        <strong>メニューや店舗を検索</strong>
+        <p>例：ラーメン、カレー、チキン、カフェ、寿司</p>
+      </div>
+    `;
+
+    CATEGORIES.slice(0, 8).forEach((category, categoryIndex) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "search-result";
+      button.dataset.type = "category";
+      button.dataset.categoryIndex = categoryIndex;
+
+      button.innerHTML = `
+        <strong>${category.icon} ${category.category}</strong>
+        <span>${category.stores.length}店舗を見る</span>
+      `;
+
+      searchResults.appendChild(button);
+    });
+
+    return;
+  }
+
+  let results = [];
+
+  CATEGORIES.forEach((category, categoryIndex) => {
+    if (category.category.toLowerCase().includes(q)) {
+      results.push({
+        type: "category",
+        categoryIndex,
+        title: `${category.icon} ${category.category}`,
+        description: `${category.stores.length}店舗を見る`
+      });
+    }
+
+    category.stores.forEach((store, storeIndex) => {
+      if (store.name.toLowerCase().includes(q)) {
+        results.push({
+          type: "store",
+          categoryIndex,
+          storeIndex,
+          title: store.name,
+          description: `${category.category}・${store.items.length}商品`
+        });
+      }
+
+      store.items.forEach((item, itemIndex) => {
+        if (item.name.toLowerCase().includes(q)) {
+          results.push({
+            type: "item",
+            categoryIndex,
+            storeIndex,
+            itemIndex,
+            title: item.name,
+            description: `${store.name}・${formatYen(item.price)}`
+          });
+        }
+      });
+    });
+  });
+
+  if (results.length === 0) {
+    searchResults.innerHTML = `
+      <div class="empty-state">
+        <strong>見つかりませんでした</strong>
+        <p>別のキーワードで検索してみてください。</p>
+      </div>
+    `;
+    return;
+  }
+
+  results.slice(0, 30).forEach((result) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "search-result";
+    button.dataset.type = result.type;
+    button.dataset.categoryIndex = result.categoryIndex;
+
+    if (result.storeIndex !== undefined) {
+      button.dataset.storeIndex = result.storeIndex;
+    }
+
+    if (result.itemIndex !== undefined) {
+      button.dataset.itemIndex = result.itemIndex;
+    }
+
+    button.innerHTML = `
+      <strong>${result.title}</strong>
+      <span>${result.description}</span>
+    `;
+
+    searchResults.appendChild(button);
+  });
+}
+
+function startAccepting() {
+  if (cart.length === 0) return;
+
+  clearAcceptTimers();
+
+  latestOrder = {
+    items: [...cart],
+    total: getCartTotal()
+  };
+
+  addSavings(latestOrder.total);
+
+  cart = [];
+  saveCart();
+  renderCart();
+
+  showScreen("accepting");
+
+  acceptStatus.textContent = "注文を受け付けたつもりです";
+
+  acceptTimers.push(
+    setTimeout(() => {
+      acceptStatus.textContent = "お店が注文を確認しているつもりです";
+    }, 700)
+  );
+
+  acceptTimers.push(
+    setTimeout(() => {
+      acceptStatus.textContent = "調理しているつもりです";
+    }, 1400)
+  );
+
+  acceptTimers.push(
+    setTimeout(() => {
+      acceptStatus.textContent = "配達員が向かっているつもりです";
+    }, 2100)
+  );
+
+  acceptTimers.push(
+    setTimeout(() => {
+      acceptStatus.textContent = "受付完了しました";
+    }, 2800)
+  );
+
+  acceptTimers.push(
+    setTimeout(() => {
+      renderResult();
+      showScreen("result");
+    }, 3500)
+  );
+}
+
+function renderResult() {
+  if (!latestOrder) return;
+
+  const itemNames = latestOrder.items
+    .map((item) => {
+      return `
+        <li>
+          ${item.name}
+          <span>${formatYen(item.price)}</span>
+        </li>
+      `;
+    })
+    .join("");
+
+  resultTitle.textContent = `${latestOrder.items.length}品を食べたつもり！`;
 
   resultText.innerHTML = `
-    ${store.name}<br>
-    ${category.category}<br>
-    節約できた金額：<strong>${formatYen(item.price)}</strong>
+    <div class="result-order-list">
+      <ul>
+        ${itemNames}
+      </ul>
+    </div>
+
+    <div class="result-total">
+      <span>今回の節約</span>
+      <strong>${formatYen(latestOrder.total)}</strong>
+    </div>
+
+    <p class="result-message">
+      注文したつもりなので、出費もカロリーもゼロのつもりです。
+    </p>
   `;
+}
+
+function showToast(message) {
+  const oldToast = document.querySelector(".toast");
+
+  if (oldToast) {
+    oldToast.remove();
+  }
+
+  const toast = document.createElement("div");
+  toast.className = "toast";
+  toast.textContent = message;
+
+  document.body.appendChild(toast);
 
   setTimeout(() => {
-    deliveryStatus.textContent = "調理しているつもりです";
-  }, 700);
-
-  setTimeout(() => {
-    deliveryStatus.textContent = "配達員が向かっているつもりです";
-  }, 1400);
-
-  setTimeout(() => {
-    deliveryStatus.textContent = "届いたつもりです";
-  }, 2100);
+    toast.remove();
+  }, 1700);
 }
 
 categoryList.addEventListener("click", (event) => {
@@ -942,25 +1257,111 @@ itemList.addEventListener("click", (event) => {
   const card = event.target.closest(".item-card");
   if (!card) return;
 
-  const category = CATEGORIES[selectedCategoryIndex];
-  const store = category.stores[selectedStoreIndex];
-  const item = store.items[Number(card.dataset.index)];
+  const itemIndex = Number(card.dataset.index);
 
-  orderItem(item);
+  addToCart(selectedCategoryIndex, selectedStoreIndex, itemIndex);
+});
+
+checkoutList.addEventListener("click", (event) => {
+  const removeButton = event.target.closest(".remove-item");
+  if (!removeButton) return;
+
+  const id = removeButton.dataset.id;
+
+  cart = cart.filter((item) => item.id !== id);
+  saveCart();
+  renderCart();
+});
+
+searchInput.addEventListener("input", () => {
+  renderSearch(searchInput.value);
+});
+
+searchResults.addEventListener("click", (event) => {
+  const card = event.target.closest(".search-result");
+  if (!card) return;
+
+  const type = card.dataset.type;
+  const categoryIndex = Number(card.dataset.categoryIndex);
+  const storeIndex = Number(card.dataset.storeIndex);
+  const itemIndex = Number(card.dataset.itemIndex);
+
+  if (type === "category") {
+    selectedCategoryIndex = categoryIndex;
+    renderStores();
+    showScreen("store");
+  }
+
+  if (type === "store") {
+    selectedCategoryIndex = categoryIndex;
+    selectedStoreIndex = storeIndex;
+    renderItems();
+    showScreen("item");
+  }
+
+  if (type === "item") {
+    addToCart(categoryIndex, storeIndex, itemIndex);
+  }
+});
+
+document.querySelectorAll(".nav-item").forEach((button) => {
+  button.addEventListener("click", () => {
+    const target = button.dataset.target;
+
+    if (target === "home") {
+      showScreen("home");
+    }
+
+    if (target === "search") {
+      showScreen("search");
+      setTimeout(() => {
+        searchInput.focus();
+      }, 100);
+    }
+
+    if (target === "cart") {
+      showScreen("cart");
+    }
+
+    if (target === "account") {
+      showScreen("account");
+    }
+  });
 });
 
 backToCategories.addEventListener("click", () => {
-  showScreen("category");
+  showScreen("home");
 });
 
 backToStores.addEventListener("click", () => {
   showScreen("store");
 });
 
-orderAgain.addEventListener("click", () => {
-  showScreen("category");
+continueShopping.addEventListener("click", () => {
+  showScreen("home");
 });
 
+clearCart.addEventListener("click", () => {
+  cart = [];
+  saveCart();
+  renderCart();
+});
+
+confirmOrder.addEventListener("click", () => {
+  startAccepting();
+});
+
+resultHome.addEventListener("click", () => {
+  showScreen("home");
+});
+
+resultAccount.addEventListener("click", () => {
+  showScreen("account");
+});
+
+loadCart();
 loadSavings();
 renderCategories();
-showScreen("category");
+renderSearch("");
+renderCart();
+showScreen("home");
